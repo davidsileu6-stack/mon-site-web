@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio de David Sileu</title>
+  <meta name="description" content="Portfolio de David Sileu — Étudiant en Intelligence Artificielle, passionné de cybersécurité, réseaux et innovation technologique.">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ======== STYLE GLOBAL ======== */
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, sans-serif;
+      background-color: #f5f6fa;
+      color: #2f3640;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e40af, #2563eb);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1rem 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease-in;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+    }
+
+    h2 {
+      color: #1e3a8a;
+      border-left: 5px solid #2563eb;
+      padding-left: 10px;
+    }
+
+    p {
+      text-align: justify;
+    }
+
+    img {
+      display: block;
+      margin: 1rem auto;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    img:hover {
+      transform: scale(1.05);
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ======== PROJET ======== */
+    article {
+      background: #f9fafb;
+      padding: 1.5rem;
+      border-left: 4px solid #2563eb;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .sous-section {
+      background: #eef2ff;
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .sous-section h4 {
+      color: #1e3a8a;
+      margin-top: 0;
+    }
+
+    footer {
+      background-color: #1e293b;
+      color: #e2e8f0;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+      border-top: 4px solid #2563eb;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 700px) {
+      main {
+        padding: 1rem;
+      }
+      header h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Portfolio de David Sileu</h1>
+    <p>Étudiant en Intelligence Artificielle au Collège CDI</p>
+  </header>
+
+  <main>
+    <section id="presentation">
+      <h2>À propos de moi</h2>
+      <img src="Image/costume.jpg" alt="Photo de profil de David Sileu" width="200">
+      <p>
+        Passionné par les technologies, je suis titulaire d’une <strong>licence en Réseaux et Télécommunications</strong>,
+        avec de solides compétences en <strong>cybersécurité</strong>.  
+        Actuellement étudiant en <strong>Intelligence Artificielle</strong> au Collège CDI,
+        je cherche à combiner <strong>sécurité, connectivité et IA</strong> pour créer des solutions
+        innovantes et efficaces au service des entreprises et des particuliers.
+      </p>
+    </section>
+
+    <section id="projets">
+      <h2>Mes projets</h2>
+
+      <article>
+        <h3>Projet de soutenance — Livre technique</h3>
+        <p>
+          Dans le cadre de ma licence en Réseaux et Télécommunications, j’ai rédigé un livre explorant
+          les enjeux de la connectivité et de la cybersécurité, en proposant des pistes d’amélioration
+          pour la gestion sécurisée des réseaux d’entreprise.
+        </p>
+        <p>
+          <a href="livres/david-projet-memoire-fin.pdf" target="_blank">📘 Lire mon livre</a> | 
+          <a href="livres/david-projet-memoire-fin.pdf" download>⬇️ Télécharger le livre</a>
+        </p>
+        <br> 
+        <p> Quelque image de mes traveau en reseau et securiter informatique </p>
+        <img src="Image/initial.png" alt="etat innitial de notre reseau" width="650">
+        <h1>etat initial de notre infrastucture informatique</h1>
+        <img src="Image/batimentsecond.png" alt="etat innitial du batiment secondaire" width="650">
+        <h1>etat initial de notre infrastucture informatique dans le batimentsecondaire</h1>
+        <img src="Image/nouveau reseaux ngaoundere.png" alt=" interconnection et mise en place basique du reseau" width="650">
+        <img src="Image/reseau optimiser.png" alt="maquette final du reseau" width="650">
+        <img src="Image/controleur de temperature.png" alt="maquette final du reseau" width="650">
+        <br>
+        <h1> Module de controle de temperature</h1>
+
+      
+
+
+        <div class="sous-section">
+          <h4>📸 Projet en développement : Lunettes connectées intelligentes</h4>
+          <p>
+            En parallèle de mes études, je travaille sur un prototype d'application destiné à des
+            <strong>lunettes connectées</strong> capables de réaliser la <strong>traduction et transcription audio</strong>,
+            ainsi que la <strong>recherche d’images à visée touristique</strong>.  
+            Ce projet illustre la convergence entre l’<strong>IA</strong> et les <strong>technologies portables (wearables)</strong>.
+          </p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 David Sileu — Réseaux • Cybersécurité • Intelligence Artificielle</p>
+  </footer>
+</body>
+</html>

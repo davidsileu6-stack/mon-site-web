@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+   <!-- === CHATBOT VERSION 1.6 === -->
+<div id="chatbot-container">
+  <div id="chatbot-header">
+    <img id="chatbot-avatar" src="Image/image-david-neutre.png" alt="Assistant Virtuel">
+    <span><strong>Assistant Virtuel - Version 1.6</strong></span>
+  </div>
+  <div id="chatbot-body">
+    <div class="bot-message">
+      <img class="bot-img" src="Image/image-david-neutre.png" alt="bot neutre">
+      <p>Salut 👋 ! Je suis ton assistant virtuel. Tu veux apprendre à mieux connaître David ?</p>
+      <div class="options">
+        <button onclick="handleChoice('qui')">Qui est David ?</button>
+        <button onclick="handleChoice('projets')">Ses projets</button>
+        <button onclick="handleChoice('travail')">Sur quoi il travaille actuellement ?</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* --- Apparence générale du chatbot --- */
+  #chatbot-container {
+    position: fixed;
+    bottom: -600px;
+    right: 30px;
+    width: 480px; /* élargissement +26% */
+    max-height: 640px; /* plus haut aussi */
+    background: linear-gradient(180deg, #f8faff, #e6f0ff);
+    border-radius: 22px;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.35);
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    z-index: 9999;
+    opacity: 0;
+    animation: slideUp 1.2s ease-out forwards;
+  }
+
+  @keyframes slideUp {
+    0% { bottom: -600px; opacity: 0; }
+    100% { bottom: 25px; opacity: 1; }
+  }
+
+  #chatbot-header {
+    background: #0059b3;
+    color: white;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  #chatbot-header img {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    border: 2px solid white;
+    transition: transform 0.4s ease-in-out;
+  }
+
+  #chatbot-header img.animate {
+    transform: rotate(8deg) scale(1.2);
+  }
+
+  #chatbot-body {
+    padding: 16px;
+    overflow-y: auto;
+    max-height: 530px;
+  }
+
+  .bot-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 14px;
+    animation: fadeIn 0.6s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .bot-img {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    transition: transform 0.4s ease;
+  }
+
+  .bot-img:hover {
+    transform: scale(1.18) rotate(-3deg);
+  }
+
+  .bot-message p {
+    background: #e6f0ff;
+    padding: 12px 16px;
+    border-radius: 14px;
+    max-width: 320px;
+    font-size: 16px;
+    line-height: 1.5em;
+  }
+
+  .options button {
+    margin: 6px;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    background-color: #0059b3;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+  }
+
+  .options button:hover {
+    background-color: #003d80;
+    transform: scale(1.08);
+  }
+</style>
+
+<script>
+  const chatbotBody = document.getElementById("chatbot-body");
+  const avatar = document.getElementById("chatbot-avatar");
+
+  function animateAvatar() {
+    avatar.classList.add("animate");
+    setTimeout(() => avatar.classList.remove("animate"), 700);
+  }
+
+  function addBotMessage(text, mood = "neutre") {
+    const message = document.createElement("div");
+    message.classList.add("bot-message");
+
+    const img = document.createElement("img");
+    img.classList.add("bot-img");
+
+    if (mood === "joyeux") img.src = "Image/image-david-presentation.png";
+    else if (mood === "vexe") img.src = "Image/image-david-presentation-embarasser.png";
+    else img.src = "Image/image-david-neutre.png";
+
+    const p = document.createElement("p");
+    p.textContent = text;
+
+    message.appendChild(img);
+    message.appendChild(p);
+    chatbotBody.appendChild(message);
+    chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    animateAvatar();
+  }
+
+  function handleChoice(choice) {
+    chatbotBody.scrollTop = chatbotBody.scrollHeight;
+
+    if (choice === "qui") {
+      addBotMessage("David Sileu est un passionné de technologie, titulaire d'une licence en Réseaux et Télécommunications.", "joyeux");
+      addBotMessage("Il étudie actuellement l’intelligence artificielle au Collège CDI. Il adore mélanger logique et créativité.", "joyeux");
+      showOptions([
+        { text: "Parle-moi de ses projets", action: "projets" },
+        { text: "Qu’est-ce qu’il fait en ce moment ?", action: "travail" }
+      ]);
+    } 
+    else if (choice === "projets") {
+      addBotMessage("David a dirigé un projet majeur : la numérisation du système d’information d’un hôpital grâce à un réseau informatique sécurisé.", "neutre");
+      addBotMessage("Ce projet combinait : réseau, administration système, base de données et programmation embarquée sur des modules Arduino.", "joyeux");
+      showOptions([
+        { text: "C’est impressionnant ! Comment le contacter ?", action: "contact" },
+        { text: "Dis-m’en plus sur ses études", action: "travail" }
+      ]);
+    } 
+    else if (choice === "travail") {
+      addBotMessage("En ce moment, il travaille sur des projets en IA, comme la création d’un assistant virtuel et d’outils de transcription audio automatique.", "joyeux");
+      showOptions([
+        { text: "Je veux collaborer avec lui", action: "contact" },
+        { text: "Montre-moi ses anciens projets", action: "projets" }
+      ]);
+    } 
+    else if (choice === "contact") {
+      addBotMessage("Super idée 😄 ! Tu peux contacter directement David : 📧 davidsileu6@gmail.com ou 📱 438-454-5315.", "joyeux");
+      addBotMessage("Il sera ravi d’échanger avec toi !", "joyeux");
+      showOptions([
+        { text: "Merci !", action: "end" },
+        { text: "J’ai encore une question", action: "qui" }
+      ]);
+    } 
+    else if (choice === "end") {
+      addBotMessage("À bientôt 👋 et n’oublie pas : les rêves deviennent réels quand on agit !", "joyeux");
+    } 
+    else {
+      addBotMessage("Heeey doucement 😅 ! Je défends David, moi. Pose ta question avec respect et je te répondrai volontiers.", "vexe");
+    }
+  }
+
+  function showOptions(options) {
+    const btnContainer = document.createElement("div");
+    btnContainer.classList.add("options");
+    options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = opt.text;
+      btn.onclick = () => handleChoice(opt.action);
+      btnContainer.appendChild(btn);
+    });
+    chatbotBody.appendChild(btnContainer);
+    chatbotBody.scrollTop = chatbotBody.scrollHeight;
+  }
+</script>
+
+
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="witdth=device-width,initial-scale=1 ">
+        <style>/* === STYLE PROFESSIONNEL === */
+            body {
+              font-family: "Roboto", "Helvetica Neue", sans-serif;
+              background: linear-gradient(160deg, #0f172a, #1e293b);
+              color: #0b1d35;
+              margin: 0;
+              padding: 0;
+            }
+            
+            header {
+              background: rgba(30, 41, 59, 0.9);
+              color: #f8fafc;
+              text-align: center;
+              padding: 2rem 1rem;
+              border-bottom: 3px solid #2563eb;
+            }
+            
+            header h1 {
+              font-size: 2rem;
+              margin-bottom: 0.3rem;
+            }
+            
+            nav a {
+              color: #93c5fd;
+              margin: 0 12px;
+              text-decoration: none;
+              font-weight: 600;
+            }
+            
+            nav a:hover {
+              color: #3b82f6;
+            }
+            
+            main {
+              max-width: 1000px;
+              margin: 2rem auto;
+              background: rgba(51, 65, 85, 0.95);
+              padding: 2rem;
+              border-radius: 10px;
+              box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+            }
+            
+            section h2 {
+              color: #60a5fa;
+              border-left: 4px solid #3b82f6;
+              padding-left: 10px;
+            }
+            
+            a {
+              color: #60a5fa;
+              text-decoration: none;
+            }
+            
+            a:hover {
+              text-decoration: underline;
+            }
+            
+            footer {
+              background: rgba(15, 23, 42, 0.9);
+              color: #94a3b8;
+              text-align: center;
+              padding: 1rem;
+              border-top: 3px solid #2563eb;
+            }
+            </style>
+    <title>Mon portfolio</title>
+    
+    <body>
+        <header>
+            <h1>Tchouaga Sileu David Emmanuel</h1>
+            <nav>
+                <a href="index.html"> Accueil </a>
+
+                <a href="projet.html">Projets</a>
+
+                <a href="contact.html">contact</a>
+            </nav>
+        </header>
+        <main>
+            <section id ="presentation">
+
+                <h2>Ma modeste prersonne</h2> 
+                <p>Bonjour je m'appelle David Sileu Passionné par les technologies, 
+                    je suis titulaire d’une licence en Réseaux et Télécommunications  possèdent
+                     de solides compétences en 
+                    cybersécurité. Actuellement étudiant en Intelligence Artificielle au Collège CDI
+                    , je cherche à combiner sécurité, connectivité et IA pour créer des solutions
+                     innovantes et efficaces.</p>
+                     <img src="Image/costume.jpg" alt="Photo de profil" width="250">
+                     <section id="hobbies">
+                        <h2>Mes hobbies</h2>
+                        <ul>
+                          <li>Pratique du football</li>
+                          <li>consomateur regulier de film et serie d'animation</li>
+                          <li>cuisine</li>
+                        </ul>
+                      </section>
+                    </main>
+
+                    <footer>
+                      <p>© 2025 — David Sileu</p>
+                    </footer>
+                  
+            </section>
+
+        </main>
+    </body>
+    </head>
+</html>
