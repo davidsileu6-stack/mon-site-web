@@ -101,63 +101,27 @@
       align-items: center;
       gap: 10px;
     }
-    #reduce-btn {
-  margin-left: auto;
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-#reduce-btn:hover {
-  transform: scale(1.2);
-  color: #c7d2fe;
-}
-
-/* Mode réduit du chatbot */
-#chatbot-container.minimized {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: transparent;
-  box-shadow: none;
-  overflow: visible;
-  animation: float 3s ease-in-out infinite;
-}
-
-#chatbot-container.minimized #chatbot-header,
-#chatbot-container.minimized #chatbot-body {
-  display: none;
-}
-
-#chatbot-avatar-mini {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: transform 0.3s, filter 0.3s;
-  animation: float 3s ease-in-out infinite;
-}
-
-#chatbot-avatar-mini:hover {
-  transform: scale(1.1);
-  filter: brightness(1.3);
-}
-
-/* Animation élégante */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
 
     #chatbot-header img {
       width: 50px;
       height: 50px;
       border-radius: 50%;
       border: 2px solid white;
+    }
+
+    #reduce-btn {
+      margin-left: auto;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #reduce-btn:hover {
+      transform: scale(1.2);
+      color: #c7d2fe;
     }
 
     #chatbot-body {
@@ -192,6 +156,7 @@
       max-width: 230px;
       font-size: 14px;
       line-height: 1.4em;
+      color: #f8fafc;
     }
 
     .options button {
@@ -210,21 +175,54 @@
       background-color: #003d80;
       transform: scale(1.05);
     }
+
+    /* Mode réduit du chatbot */
+    #chatbot-container.minimized {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: none;
+      overflow: visible;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    #chatbot-container.minimized #chatbot-header,
+    #chatbot-container.minimized #chatbot-body {
+      display: none;
+    }
+
+    #chatbot-avatar-mini {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s, filter 0.3s;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    #chatbot-avatar-mini:hover {
+      transform: scale(1.1);
+      filter: brightness(1.3);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
     @media (max-width: 600px) {
       header h1 {
         font-size: 1.5rem;
       }
-
       nav a {
         display: inline-block;
         margin: 5px;
       }
-
       main {
         padding: 1rem;
         margin: 1rem;
       }
-
       #chatbot-container {
         bottom: 10px;
         right: 10px;
@@ -271,11 +269,11 @@
   </footer>
 
   <!-- === CHATBOT === -->
-  <div id="chatbot-container">
-    <button id="reduce-btn" onclick="toggleChatbot()">—</button>
+  <div id="chatbot-container" class="minimized">
     <div id="chatbot-header">
       <img id="chatbot-avatar" src="Image/image-david-neutre.png" alt="Assistant Virtuel" />
       <span><strong>Assistant Virtuel - Version 1.6</strong></span>
+      <button id="reduce-btn" onclick="toggleChatbot()">—</button>
     </div>
     <div id="chatbot-body">
       <div class="bot-message">
@@ -285,6 +283,7 @@
           <button onclick="handleChoice('qui')">Qui est David ?</button>
           <button onclick="handleChoice('projets')">Ses projets</button>
           <button onclick="handleChoice('travail')">Sur quoi il travaille ?</button>
+          <button onclick="handleChoice('navigation')">Explorer le site 🌐</button>
         </div>
       </div>
     </div>
@@ -292,6 +291,7 @@
 
   <script>
     const chatbotBody = document.getElementById("chatbot-body");
+    const chatbotContainer = document.getElementById("chatbot-container");
 
     function addBotMessage(text, mood = "neutre") {
       const message = document.createElement("div");
@@ -335,14 +335,15 @@
           { text: "Qu’est-ce qu’il fait en ce moment ?", action: "travail" }
         ]);
       } else if (choice === "projets") {
-        addBotMessage("David a dirigé un projet majeur : la numérisation du système d’information d’un hôpital grâce à un réseau informatique sécurisé.", "neutre");
-        addBotMessage("Ce projet combinait : réseau, administration système, base de données et programmation embarquée sur des modules Arduino.", "joyeux");
+        addBotMessage("David a dirigé un projet majeur : la numérisation du système d’information d’un hôpital militaire via un réseau sécurisé.", "neutre");
+        addBotMessage("Il a aussi travaillé sur des modules Arduino pour capter la température ambiante et celle du corps humain.", "joyeux");
+        addBotMessage("Il planifie aussi un projet de lunettes connectées qui, espérons-le, verra bientôt le jour 👓.", "joyeux");
         showOptions([
           { text: "C’est impressionnant ! Comment le contacter ?", action: "contact" },
-          { text: "Dis-m’en plus sur ses études", action: "travail" }
+          { text: "Explorer le site 🌐", action: "navigation" }
         ]);
       } else if (choice === "travail") {
-        addBotMessage("En ce moment, il travaille sur des projets en IA, comme la création d’un assistant virtuel et d’outils de transcription audio automatique.", "joyeux");
+        addBotMessage("En ce moment, il expérimente la création d’une IA entièrement locale et d’outils de transcription audio automatique.", "joyeux");
         showOptions([
           { text: "Je veux collaborer avec lui", action: "contact" },
           { text: "Montre-moi ses anciens projets", action: "projets" }
@@ -352,39 +353,53 @@
         addBotMessage("Il sera ravi d’échanger avec toi !", "joyeux");
         showOptions([
           { text: "Merci !", action: "end" },
-          { text: "Encore une question", action: "qui" }
+          { text: "Explorer le site 🌐", action: "navigation" }
         ]);
+      } else if (choice === "navigation") {
+        addBotMessage("Tu veux aller où ?", "joyeux");
+        showOptions([
+          { text: "🏠 Accueil", action: "goto-accueil" },
+          { text: "📁 Projets", action: "goto-projets" },
+          { text: "📞 Contact", action: "goto-contact" }
+        ]);
+      } else if (choice === "goto-accueil") {
+        window.location.href = "index.html";
+      } else if (choice === "goto-projets") {
+        window.location.href = "projet.html";
+      } else if (choice === "goto-contact") {
+        window.location.href = "contact.html";
       } else if (choice === "end") {
         addBotMessage("À bientôt 👋 et n’oublie pas : les rêves deviennent réels quand on agit !", "joyeux");
       }
     }
-  </script>
-  <script>
-  const chatbotContainer = document.getElementById("chatbot-container");
-  const chatbotAvatarMini = document.createElement("img");
-  chatbotAvatarMini.id = "chatbot-avatar-mini";
-  chatbotAvatarMini.src = "Image/image-david-neutre.png";
-  chatbotAvatarMini.style.display = "none";
-  chatbotAvatarMini.alt = "Chatbot réduit";
-  chatbotContainer.parentElement.appendChild(chatbotAvatarMini);
 
-  function toggleChatbot() {
-    if (chatbotContainer.classList.contains("minimized")) {
-      chatbotContainer.classList.remove("minimized");
-      chatbotAvatarMini.style.display = "none";
-    } else {
+    // === Gestion du mode réduit ===
+    const chatbotAvatarMini = document.createElement("img");
+    chatbotAvatarMini.id = "chatbot-avatar-mini";
+    chatbotAvatarMini.src = "Image/image-david-neutre.png";
+    chatbotAvatarMini.alt = "Chatbot réduit";
+    chatbotAvatarMini.style.display = "block";
+    document.body.appendChild(chatbotAvatarMini);
+
+    function toggleChatbot() {
+      if (chatbotContainer.classList.contains("minimized")) {
+        chatbotContainer.classList.remove("minimized");
+        chatbotAvatarMini.style.display = "none";
+      } else {
+        chatbotContainer.classList.add("minimized");
+        chatbotAvatarMini.style.display = "block";
+      }
+    }
+
+    chatbotAvatarMini.addEventListener("click", () => {
+      toggleChatbot();
+    });
+
+    // Le chatbot démarre réduit
+    window.addEventListener("load", () => {
       chatbotContainer.classList.add("minimized");
       chatbotAvatarMini.style.display = "block";
-    }
-  }
-
-  chatbotAvatarMini.addEventListener("click", () => {
-    toggleChatbot();
-  });
-</script>
-
+    });
+  </script>
 </body>
 </html>
-
-
-
