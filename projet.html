@@ -384,17 +384,11 @@
         addBotMessage("Il a ajouté une compensation logicielle selon la température ambiante et le temps d’échantillonnage. Résultat : des mesures fiables à ±0.2 °C 👌.", "joyeux");
         addOptions([{ text: "Retour au menu principal", value: "menu" }]);
       }
-
-      else if (choice === "lunettes") {
-        addBotMessage("Son projet de lunettes connectées 🕶️ combine traduction audio, reconnaissance d’images et assistance touristique. Rien que ça !", "joyeux");
-        setTimeout(() => {
-          addBotMessage("Le plus dur ? Faire tourner l’IA sur un petit processeur sans tout planter 😅. Optimiser les modèles IA lui a demandé des semaines de tests.", "vexe");
-          addOptions([
-            { text: "Comment il a géré l’optimisation IA ?", value: "lunettes-ia" },
-            { text: "Retour au menu principal", value: "menu" }
-          ]);
-        }, 1000);
-      }
+ else if (choice === "lunettes") {
+      addBotMessage("Le projet des lunettes connectées 🕶️ est encore en phase de planification pour le moment.", "neutre");
+      addBotMessage("David espère pouvoir concrétiser ce prototype bientôt : des lunettes capables de traduire, transcrire et reconnaître des lieux touristiques en temps réel.", "joyeux");
+      addBotMessage("C’est un projet ambitieux qui mêle IA embarquée et design ergonomique.", "joyeux");
+    } 
 
       else if (choice === "lunettes-ia") {
         addBotMessage("Il a utilisé des modèles légers et quantifiés pour qu’ils tournent sur des processeurs basse consommation. Le rendu visuel et audio est fluide et hors-ligne !", "joyeux");
@@ -431,6 +425,7 @@
 
 </body>
 </html>
+
 
 
 
