@@ -65,4 +65,218 @@
       width: 100%;
       max-width: 650px;
       border-radius: 10px;
-      display:
+      display: block;
+      margin: 1rem auto;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    }
+
+    footer {
+      background: rgba(15, 23, 42, 0.9);
+      color: #94a3b8;
+      text-align: center;
+      padding: 1rem;
+      border-top: 3px solid #2563eb;
+      font-size: 0.9rem;
+    }
+
+    /* === CHATBOT === */
+    #chatbot-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 90%;
+      max-width: 360px;
+      background: linear-gradient(180deg, #f8faff, #e6f0ff);
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      font-family: "Segoe UI", sans-serif;
+      z-index: 9999;
+      animation: slideUp 1s ease-out forwards;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    #chatbot-header {
+      background: #0059b3;
+      color: white;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #chatbot-header img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
+    #chatbot-body {
+      padding: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .bot-message {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .bot-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+
+    .bot-message p {
+      background: #070707;
+      padding: 8px 12px;
+      border-radius: 10px;
+      max-width: 230px;
+      font-size: 14px;
+      line-height: 1.4em;
+      color: #f8fafc;
+    }
+
+    .options button {
+      margin: 5px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: #0059b3;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .options button:hover {
+      background-color: #003d80;
+      transform: scale(1.05);
+    }
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Mes Projets — David Sileu</h1>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="projet.html">Projets</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="projets">
+      <h2>Présentation de mes projets</h2>
+
+      <article>
+        <h3>Réseau hospitalier et cybersécurité</h3>
+        <p>
+          J’ai participé à la mise en place du système d'information d’un <strong>hôpital militaire</strong> :
+          création d’une architecture réseau complète, câblage, routage et sécurisation du trafic interne.
+          Ce projet m’a permis d’appliquer mes connaissances en <strong>infrastructure réseau</strong> et
+          <strong>sécurité informatique</strong> sur le terrain.
+        </p>
+        <img src="Image/initial.png" alt="État initial du réseau">
+        <h4>État initial de l’infrastructure</h4>
+        <img src="Image/batimentsecond.png" alt="État du bâtiment secondaire">
+        <h4>Bâtiment secondaire avant déploiement</h4>
+        <img src="Image/nouveau reseaux ngaoundere.png" alt="Installation du réseau">
+        <h4>Interconnexion et mise en place du réseau</h4>
+        <img src="Image/reseau optimiser.png" alt="Maquette finale du réseau">
+        <h4>Maquette finale du réseau optimisé</h4>
+      </article>
+
+      <article>
+        <h3>Module Arduino — Capteurs de température</h3>
+        <p>
+          Conception d’un <strong>module de contrôle de température</strong> permettant de mesurer la température
+          ambiante et corporelle, avec transmission des données sur un tableau de bord.
+        </p>
+        <img src="Image/controleur de temperature.png" alt="Module Arduino de contrôle de température">
+      </article>
+
+      <article>
+        <h3>Prototype IA locale et lunettes connectées</h3>
+        <p>
+          Développement expérimental d’une <strong>IA entièrement locale</strong> sans dépendance cloud, combinée à un
+          prototype de <strong>lunettes connectées</strong> permettant traduction audio, transcription et recherche visuelle
+          touristique en temps réel.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 — David Sileu | Réseaux • Cybersécurité • Intelligence Artificielle</p>
+  </footer>
+
+  <!-- === CHATBOT PROJETS === -->
+  <div id="chatbot-container">
+    <div id="chatbot-header">
+      <img id="chatbot-avatar" src="Image/image-david-neutre.png" alt="Assistant Virtuel" />
+      <span><strong>Assistant Virtuel — Section Projets</strong></span>
+    </div>
+    <div id="chatbot-body">
+      <div class="bot-message">
+        <img class="bot-img" src="Image/image-david-presentation.png" alt="bot" />
+        <p>Salut 👋 Ici, je te présente les projets sur lesquels travaille David. Que veux-tu explorer ?</p>
+      </div>
+      <div class="options">
+        <button onclick="handleChoice('hopital')">Réseau hospitalier</button>
+        <button onclick="handleChoice('arduino')">Module Arduino</button>
+        <button onclick="handleChoice('lunettes')">Lunettes connectées</button>
+        <button onclick="handleChoice('ia')">IA locale</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const chatbotBody = document.getElementById("chatbot-body");
+
+    function addBotMessage(text, mood = "neutre") {
+      const message = document.createElement("div");
+      message.classList.add("bot-message");
+      const img = document.createElement("img");
+      img.classList.add("bot-img");
+      if (mood === "joyeux") img.src = "Image/image-david-presentation.png";
+      else if (mood === "vexe") img.src = "Image/image-david-presentation-embarasser.png";
+      else img.src = "Image/image-david-neutre.png";
+      const p = document.createElement("p");
+      p.textContent = text;
+      message.appendChild(img);
+      message.appendChild(p);
+      chatbotBody.appendChild(message);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    function handleChoice(choice) {
+      if (choice === "hopital") {
+        addBotMessage("David a conçu le réseau informatique complet d’un hôpital militaire 🏥, incluant le câblage, la configuration des routeurs et la sécurisation du système d’information.", "joyeux");
+      } else if (choice === "arduino") {
+        addBotMessage("Il a développé un module Arduino capable de mesurer la température ambiante et corporelle 🌡️, idéal pour des applications médicales et IoT.", "joyeux");
+      } else if (choice === "lunettes") {
+        addBotMessage("Son projet phare : des lunettes connectées 🕶️ capables de traduire et transcrire l’audio en temps réel, et même de reconnaître des lieux touristiques !", "joyeux");
+      } else if (choice === "ia") {
+        addBotMessage("David expérimente la création d’une IA 100% locale 🤖, sans cloud, pour offrir une autonomie et une sécurité totale des données.", "joyeux");
+      }
+    }
+  </script>
+</body>
+</html>
