@@ -101,6 +101,57 @@
       align-items: center;
       gap: 10px;
     }
+    #reduce-btn {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#reduce-btn:hover {
+  transform: scale(1.2);
+  color: #c7d2fe;
+}
+
+/* Mode réduit du chatbot */
+#chatbot-container.minimized {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+  animation: float 3s ease-in-out infinite;
+}
+
+#chatbot-container.minimized #chatbot-header,
+#chatbot-container.minimized #chatbot-body {
+  display: none;
+}
+
+#chatbot-avatar-mini {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s, filter 0.3s;
+  animation: float 3s ease-in-out infinite;
+}
+
+#chatbot-avatar-mini:hover {
+  transform: scale(1.1);
+  filter: brightness(1.3);
+}
+
+/* Animation élégante */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
 
     #chatbot-header img {
       width: 50px;
@@ -221,6 +272,7 @@
 
   <!-- === CHATBOT === -->
   <div id="chatbot-container">
+    <button id="reduce-btn" onclick="toggleChatbot()">—</button>
     <div id="chatbot-header">
       <img id="chatbot-avatar" src="Image/image-david-neutre.png" alt="Assistant Virtuel" />
       <span><strong>Assistant Virtuel - Version 1.6</strong></span>
@@ -307,7 +359,32 @@
       }
     }
   </script>
+  <script>
+  const chatbotContainer = document.getElementById("chatbot-container");
+  const chatbotAvatarMini = document.createElement("img");
+  chatbotAvatarMini.id = "chatbot-avatar-mini";
+  chatbotAvatarMini.src = "Image/image-david-neutre.png";
+  chatbotAvatarMini.style.display = "none";
+  chatbotAvatarMini.alt = "Chatbot réduit";
+  chatbotContainer.parentElement.appendChild(chatbotAvatarMini);
+
+  function toggleChatbot() {
+    if (chatbotContainer.classList.contains("minimized")) {
+      chatbotContainer.classList.remove("minimized");
+      chatbotAvatarMini.style.display = "none";
+    } else {
+      chatbotContainer.classList.add("minimized");
+      chatbotAvatarMini.style.display = "block";
+    }
+  }
+
+  chatbotAvatarMini.addEventListener("click", () => {
+    toggleChatbot();
+  });
+</script>
+
 </body>
 </html>
+
 
 
