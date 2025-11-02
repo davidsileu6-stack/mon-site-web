@@ -8,7 +8,52 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* === STYLE GLOBAL (identique au style principal pour la cohérence) === */
+    .memoire {
+  background: #eef2ff;
+  border-left: 4px solid #2563eb;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  margin-top: 1.5rem;
+}
+
+.memoire h3 {
+  color: #1e3a8a;
+  margin-bottom: 0.5rem;
+}
+
+.boutons-livre {
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.boutons-livre a {
+  text-decoration: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.btn-consulter {
+  background-color: #2563eb;
+  color: white;
+}
+
+.btn-telecharger {
+  background-color: #22c55e;
+  color: white;
+}
+
+.btn-consulter:hover {
+  background-color: #1e3a8a;
+}
+
+.btn-telecharger:hover {
+  background-color: #15803d;
+}
     body {
       font-family: "Segoe UI", Roboto, sans-serif;
       background: linear-gradient(160deg, #0f172a, #1e293b);
@@ -192,11 +237,11 @@
           création d’une architecture réseau complète, câblage, routage et sécurisation du trafic interne.
           Ce projet m’a permis d’appliquer mes connaissances en <strong>infrastructure réseau</strong> et
           <strong>sécurité informatique</strong> sur le terrain.
-        </p>
-        <img src="Image/initial.png" alt="État initial du réseau">
+      </p>
         <h4>État initial de l’infrastructure</h4>
-        <img src="Image/batimentsecond.png" alt="État du bâtiment secondaire">
+         <img src="Image/initial.png" alt="État initial du réseau">
         <h4>Bâtiment secondaire avant déploiement</h4>
+          <img src="Image/batimentsecond.png" alt="État du bâtiment secondaire">
         <img src="Image/nouveau reseaux ngaoundere.png" alt="Installation du réseau">
         <h4>Interconnexion et mise en place du réseau</h4>
         <img src="Image/reseau optimiser.png" alt="Maquette finale du réseau">
@@ -211,6 +256,33 @@
         </p>
         <img src="Image/controleur de temperature.png" alt="Module Arduino de contrôle de température">
       </article>
+      <div class="memoire">
+  <h3>📘 Mon mémoire de fin d'études</h3>
+  <p>
+    Dans le cadre de ma licence en <strong>Réseaux et Télécommunications</strong>, 
+    j’ai rédigé un mémoire portant sur la <strong>cybersécurité et la gestion optimisée des réseaux</strong>.  
+    Vous pouvez le consulter directement en ligne ou le télécharger pour lecture hors connexion.
+  </p>
+
+  <!-- ✅ Boutons d'action -->
+  <div class="boutons-livre">
+    <a href="livres/david-projet-memoire-fin.pdf" target="_blank" class="btn-consulter">
+      📖 Consulter en ligne
+    </a>
+    <a href="livres/david-projet-memoire-fin.pdf" download class="btn-telecharger">
+      ⬇️ Télécharger le mémoire
+    </a>
+  </div>
+
+  <!-- ✅ Prévisualisation intégrée du PDF -->
+  <iframe 
+    src="livres/david-projet-memoire-fin.pdf" 
+    width="100%" 
+    height="600px" 
+    style="border: 2px solid #2563eb; border-radius: 8px; margin-top: 1rem;">
+  </iframe>
+</div>
+
 
       <article>
         <h3>Prototype IA locale et lunettes connectées</h3>
@@ -280,3 +352,4 @@
   </script>
 </body>
 </html>
+
