@@ -6,7 +6,6 @@
   <title>Portfolio — David Sileu</title>
 
   <style>
-    /* === STYLE GLOBAL === */
     body {
       font-family: "Roboto", "Helvetica Neue", sans-serif;
       background: linear-gradient(160deg, #0f172a, #1e293b);
@@ -35,9 +34,7 @@
       font-weight: 600;
     }
 
-    nav a:hover {
-      color: #3b82f6;
-    }
+    nav a:hover { color: #3b82f6; }
 
     main {
       max-width: 900px;
@@ -85,12 +82,7 @@
       overflow: hidden;
       font-family: "Segoe UI", sans-serif;
       z-index: 9999;
-      animation: slideUp 1s ease-out forwards;
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      display: none;
     }
 
     #chatbot-header {
@@ -99,7 +91,7 @@
       padding: 12px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
     }
 
     #chatbot-header img {
@@ -107,6 +99,14 @@
       height: 50px;
       border-radius: 50%;
       border: 2px solid white;
+    }
+
+    #close-chat {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
     }
 
     #chatbot-body {
@@ -136,6 +136,7 @@
 
     .bot-message p {
       background: #070707;
+      color: #fff;
       padding: 8px 12px;
       border-radius: 10px;
       max-width: 230px;
@@ -159,25 +160,56 @@
       background-color: #003d80;
       transform: scale(1.05);
     }
+
+    /* === CHAT ICON === */
+    #chatbot-icon {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      z-index: 9998;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: float 3s ease-in-out infinite;
+      border-radius: 50%;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    #chatbot-icon:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(37, 99, 235, 0.6);
+    }
+
+    /* Message "Salut 👋" */
+    #chatbot-greeting {
+      position: fixed;
+      bottom: 120px;
+      right: 40px;
+      background: rgba(37, 99, 235, 0.9);
+      color: white;
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      z-index: 9997;
+    }
+
+    #chatbot-icon:hover + #chatbot-greeting {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.5rem;
-      }
-
-      nav a {
-        display: inline-block;
-        margin: 5px;
-      }
-
-      main {
-        padding: 1rem;
-        margin: 1rem;
-      }
-
-      #chatbot-container {
-        bottom: 10px;
-        right: 10px;
-      }
+      #chatbot-container { bottom: 10px; right: 10px; }
+      #chatbot-icon { width: 65px; height: 65px; }
     }
   </style>
 </head>
@@ -219,11 +251,18 @@
     <p>© 2025 — David Sileu</p>
   </footer>
 
-  <!-- === CHATBOT === -->
+  <!-- === CHAT ICON (réduit par défaut) === -->
+  <img id="chatbot-icon" src="Image/image-david-neutre.png" alt="Assistant Virtuel" onclick="openChat()" />
+  <div id="chatbot-greeting">Salut 👋</div>
+
+  <!-- === CHATBOT COMPLET === -->
   <div id="chatbot-container">
     <div id="chatbot-header">
-      <img id="chatbot-avatar" src="Image/image-david-neutre.png" alt="Assistant Virtuel" />
-      <span><strong>Assistant Virtuel - Version 1.6</strong></span>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img id="chatbot-avatar" src="Image/image-david-neutre.png" alt="Assistant Virtuel" />
+        <span><strong>Assistant Virtuel - Version 1.6</strong></span>
+      </div>
+      <button id="close-chat" onclick="closeChat()">✖</button>
     </div>
     <div id="chatbot-body">
       <div class="bot-message">
@@ -239,7 +278,19 @@
   </div>
 
   <script>
+    const chatbotContainer = document.getElementById("chatbot-container");
+    const chatbotIcon = document.getElementById("chatbot-icon");
     const chatbotBody = document.getElementById("chatbot-body");
+
+    function openChat() {
+      chatbotContainer.style.display = "block";
+      chatbotIcon.style.display = "none";
+    }
+
+    function closeChat() {
+      chatbotContainer.style.display = "none";
+      chatbotIcon.style.display = "block";
+    }
 
     function addBotMessage(text, mood = "neutre") {
       const message = document.createElement("div");
@@ -283,14 +334,15 @@
           { text: "Qu’est-ce qu’il fait en ce moment ?", action: "travail" }
         ]);
       } else if (choice === "projets") {
-        addBotMessage("David a dirigé un projet majeur : la numérisation du système d’information d’un hôpital grâce à un réseau informatique sécurisé.", "neutre");
-        addBotMessage("Ce projet combinait : réseau, administration système, base de données et programmation embarquée sur des modules Arduino.", "joyeux");
+        addBotMessage("David a dirigé un projet majeur : la numérisation du système d’information d’un hôpital militaire via un réseau sécurisé.", "neutre");
+        addBotMessage("Il a aussi conçu un module Arduino de mesure de température pour une meilleure surveillance des patients.", "joyeux");
+        addBotMessage("Et il planifie un projet ambitieux : des lunettes connectées capables d’analyser et traduire l’environnement 👓.", "joyeux");
         showOptions([
           { text: "C’est impressionnant ! Comment le contacter ?", action: "contact" },
           { text: "Dis-m’en plus sur ses études", action: "travail" }
         ]);
       } else if (choice === "travail") {
-        addBotMessage("En ce moment, il travaille sur des projets en IA, comme la création d’un assistant virtuel et d’outils de transcription audio automatique.", "joyeux");
+        addBotMessage("En ce moment, il travaille sur la création d’un assistant virtuel et explore l’IA locale sans dépendance au cloud.", "joyeux");
         showOptions([
           { text: "Je veux collaborer avec lui", action: "contact" },
           { text: "Montre-moi ses anciens projets", action: "projets" }
@@ -309,4 +361,3 @@
   </script>
 </body>
 </html>
-
