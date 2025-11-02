@@ -306,7 +306,7 @@
     <div id="chatbot-body">
       <div class="bot-message">
         <img class="bot-img" src="Image/image-david-presentation.png" alt="bot" />
-        <p>Salut 👋 Ici, je te présente les projets sur lesquels travaille David. Que veux-tu explorer ?</p>
+        <p>Salut 👋 Je suis l’assistant virtuel de David ! Tu veux en savoir plus sur ses projets ?</p>
       </div>
       <div class="options">
         <button onclick="handleChoice('hopital')">Réseau hospitalier</button>
@@ -323,33 +323,115 @@
     function addBotMessage(text, mood = "neutre") {
       const message = document.createElement("div");
       message.classList.add("bot-message");
+
       const img = document.createElement("img");
       img.classList.add("bot-img");
       if (mood === "joyeux") img.src = "Image/image-david-presentation.png";
       else if (mood === "vexe") img.src = "Image/image-david-presentation-embarasser.png";
       else img.src = "Image/image-david-neutre.png";
+
       const p = document.createElement("p");
       p.textContent = text;
+
       message.appendChild(img);
       message.appendChild(p);
       chatbotBody.appendChild(message);
       chatbotBody.scrollTop = chatbotBody.scrollHeight;
     }
 
+    function addOptions(options) {
+      const container = document.createElement("div");
+      container.classList.add("options");
+      options.forEach(opt => {
+        const button = document.createElement("button");
+        button.textContent = opt.text;
+        button.onclick = () => handleChoice(opt.value);
+        container.appendChild(button);
+      });
+      chatbotBody.appendChild(container);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
     function handleChoice(choice) {
       if (choice === "hopital") {
-        addBotMessage("David a conçu le réseau informatique complet d’un hôpital militaire 🏥, incluant le câblage, la configuration des routeurs et la sécurisation du système d’information.", "joyeux");
-      } else if (choice === "arduino") {
-        addBotMessage("Il a développé un module Arduino capable de mesurer la température ambiante et corporelle 🌡️, idéal pour des applications médicales et IoT.", "joyeux");
-      } else if (choice === "lunettes") {
-        addBotMessage("Son projet phare : des lunettes connectées 🕶️ capables de traduire et transcrire l’audio en temps réel, et même de reconnaître des lieux touristiques !", "joyeux");
-      } else if (choice === "ia") {
-        addBotMessage("David expérimente la création d’une IA 100% locale 🤖, sans cloud, pour offrir une autonomie et une sécurité totale des données.", "joyeux");
+        addBotMessage("David a conçu le réseau complet d’un hôpital militaire 🏥 : câblage, routage et sécurisation du système d’information.", "joyeux");
+        setTimeout(() => {
+          addBotMessage("Ce fut un vrai défi ! Le matériel manquait parfois et la configuration devait rester fonctionnelle même sans Internet. Mais il a réussi à tout automatiser avec des routeurs locaux 💪.", "vexe");
+          addOptions([
+            { text: "Comment il a géré la cybersécurité ?", value: "hopital-secu" },
+            { text: "Parle-moi d’un autre projet", value: "menu" }
+          ]);
+        }, 1000);
+      }
+
+      else if (choice === "hopital-secu") {
+        addBotMessage("Il a mis en place des VLAN pour séparer les flux, et configuré des pare-feux internes pour éviter les fuites de données. L’idée était d’assurer une confidentialité militaire 🔒.", "joyeux");
+        addOptions([{ text: "Retour au menu principal", value: "menu" }]);
+      }
+
+      else if (choice === "arduino") {
+        addBotMessage("Le module Arduino 🌡️ mesure la température ambiante et corporelle, idéal pour la santé connectée. Mais le calibrage des capteurs fut… une vraie galère 😅.", "joyeux");
+        setTimeout(() => {
+          addBotMessage("David a dû refaire plusieurs circuits, car certaines lectures variaient avec l’humidité. Il a fini par stabiliser les mesures avec un correcteur logiciel maison 🛠️.", "vexe");
+          addOptions([
+            { text: "Comment il a corrigé ça ?", value: "arduino-corr" },
+            { text: "Retour au menu principal", value: "menu" }
+          ]);
+        }, 1000);
+      }
+
+      else if (choice === "arduino-corr") {
+        addBotMessage("Il a ajouté une compensation logicielle selon la température ambiante et le temps d’échantillonnage. Résultat : des mesures fiables à ±0.2 °C 👌.", "joyeux");
+        addOptions([{ text: "Retour au menu principal", value: "menu" }]);
+      }
+
+      else if (choice === "lunettes") {
+        addBotMessage("Son projet de lunettes connectées 🕶️ combine traduction audio, reconnaissance d’images et assistance touristique. Rien que ça !", "joyeux");
+        setTimeout(() => {
+          addBotMessage("Le plus dur ? Faire tourner l’IA sur un petit processeur sans tout planter 😅. Optimiser les modèles IA lui a demandé des semaines de tests.", "vexe");
+          addOptions([
+            { text: "Comment il a géré l’optimisation IA ?", value: "lunettes-ia" },
+            { text: "Retour au menu principal", value: "menu" }
+          ]);
+        }, 1000);
+      }
+
+      else if (choice === "lunettes-ia") {
+        addBotMessage("Il a utilisé des modèles légers et quantifiés pour qu’ils tournent sur des processeurs basse consommation. Le rendu visuel et audio est fluide et hors-ligne !", "joyeux");
+        addOptions([{ text: "Retour au menu principal", value: "menu" }]);
+      }
+
+      else if (choice === "ia") {
+        addBotMessage("Le projet d’IA locale de David vise à rendre l’intelligence artificielle totalement indépendante du cloud 🤖.", "joyeux");
+        setTimeout(() => {
+          addBotMessage("Les premières versions étaient lentes faute de GPU, mais il a persévéré en optimisant les modèles Mistral et TinyLlama pour qu’ils tournent sur CPU. 💡", "vexe");
+          addOptions([
+            { text: "Il compte aller plus loin ?", value: "ia-futur" },
+            { text: "Retour au menu principal", value: "menu" }
+          ]);
+        }, 1000);
+      }
+
+      else if (choice === "ia-futur") {
+        addBotMessage("Oui ! Il prévoit de créer un assistant virtuel complet capable d’aider les entreprises à intégrer l’IA localement pour plus de sécurité et de productivité 🧠.", "joyeux");
+        addOptions([{ text: "Retour au menu principal", value: "menu" }]);
+      }
+
+      else if (choice === "menu") {
+        addBotMessage("Que veux-tu explorer maintenant ?", "joyeux");
+        addOptions([
+          { text: "Réseau hospitalier", value: "hopital" },
+          { text: "Module Arduino", value: "arduino" },
+          { text: "Lunettes connectées", value: "lunettes" },
+          { text: "IA locale", value: "ia" }
+        ]);
       }
     }
   </script>
+
 </body>
 </html>
+
 
 
 
