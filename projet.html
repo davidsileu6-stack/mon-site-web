@@ -1,509 +1,271 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Projets — Portfolio de David Sileu</title>
-  <meta name="description" content="Découvrez les projets techniques de David Sileu : IA locale, réseau hospitalier, lunettes connectées, et capteurs Arduino.">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projets — Portfolio de David Sileu</title>
+<meta name="description" content="Découvrez les projets techniques de David Sileu : IA locale, réseau hospitalier, lunettes connectées, et capteurs Arduino.">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ==== Styles similaires à ton code original ==== */
+body { font-family:"Segoe UI",Roboto,sans-serif; background:linear-gradient(160deg,#0f172a,#1e293b); color:#f8fafc; margin:0;padding:0; }
+header { background:rgba(30,41,59,0.95); text-align:center; padding:1.5rem; border-bottom:3px solid #2563eb; }
+header h1 { font-size:1.8rem; margin:0.3rem 0; }
+nav a { color:#93c5fd; margin:0 10px; text-decoration:none; font-weight:600; }
+nav a:hover { color:#3b82f6; }
+main { max-width:1000px; margin:2rem auto; background: rgba(51,65,85,0.95); padding:2rem; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.4);}
+section h2 { color:#60a5fa; border-left:4px solid #3b82f6; padding-left:10px; margin-top:1rem; }
+h3,h4 { color:#bfdbfe; }
+img { width:100%; max-width:650px; border-radius:10px; display:block; margin:1rem auto; box-shadow:0 0 15px rgba(0,0,0,0.4);}
+.memoire { background:#1e1e1e; border-left:4px solid #2563eb; padding:1.5rem; border-radius:10px; box-shadow:0 3px 10px rgba(0,0,0,0.1); margin-top:1.5rem;}
+.memoire h3 { color:#1e3a8a; margin-bottom:0.5rem; }
+.boutons-livre { margin:1rem 0; display:flex; flex-wrap:wrap; gap:1rem; }
+.boutons-livre a { text-decoration:none; padding:0.7rem 1.2rem; border-radius:8px; font-weight:bold; transition:0.3s ease; }
+.btn-consulter { background-color:#2563eb; color:white;}
+.btn-telecharger { background-color:#22c55e; color:white;}
+.btn-consulter:hover { background-color:#1e3a8a; }
+.btn-telecharger:hover { background-color:#15803d; }
+footer { background: rgba(15,23,42,0.9); color:#94a3b8; text-align:center; padding:1rem; border-top:3px solid #2563eb; font-size:0.9rem; margin-top:2rem;}
 
-  <style>
-    .memoire {
-      background:#1e1e1e;
-      border-left: 4px solid #2563eb;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      margin-top: 1.5rem;
-    }
-
-    .memoire h3 {
-      color: #1e3a8a;
-      margin-bottom: 0.5rem;
-    }
-
-    .boutons-livre {
-      margin: 1rem 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .boutons-livre a {
-      text-decoration: none;
-      padding: 0.7rem 1.2rem;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: 0.3s ease;
-    }
-
-    .btn-consulter {
-      background-color: #2563eb;
-      color: white;
-    }
-
-    .btn-telecharger {
-      background-color: #22c55e;
-      color: white;
-    }
-
-    .btn-consulter:hover {
-      background-color: #1e3a8a;
-    }
-
-    .btn-telecharger:hover {
-      background-color: #15803d;
-    }
-
-    body {
-      font-family: "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(160deg, #0f172a, #1e293b);
-      color: #f8fafc;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background: rgba(30, 41, 59, 0.95);
-      color: #f8fafc;
-      text-align: center;
-      padding: 1.5rem 1rem;
-      border-bottom: 3px solid #2563eb;
-    }
-
-    header h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.3rem;
-    }
-
-    nav a {
-      color: #93c5fd;
-      margin: 0 10px;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    nav a:hover {
-      color: #3b82f6;
-    }
-
-    main {
-      max-width: 1000px;
-      margin: 1.5rem auto;
-      background: rgba(51, 65, 85, 0.95);
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    }
-
-    section h2 {
-      color: #60a5fa;
-      border-left: 4px solid #3b82f6;
-      padding-left: 10px;
-      margin-top: 1rem;
-    }
-
-    h3, h4 {
-      color: #bfdbfe;
-    }
-
-    img {
-      width: 100%;
-      max-width: 650px;
-      border-radius: 10px;
-      display: block;
-      margin: 1rem auto;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-    }
-
-    footer {
-      background: rgba(15, 23, 42, 0.9);
-      color: #94a3b8;
-      text-align: center;
-      padding: 1rem;
-      border-top: 3px solid #2563eb;
-      font-size: 0.9rem;
-    }
-
-    /* === tete du chat === */
-#chatbot-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 90%;
-  max-width: 360px;
-  background: linear-gradient(180deg, #f8faff, #e6f0ff);
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  font-family: "Segoe UI", sans-serif;
-  z-index: 9999;
-  display: none;
-}
-
-#chatbot-header {
-  background: #0059b3;
-  color: white;
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-#chatbot-header img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: 2px solid white;
-}
-
-#close-chat {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-#chatbot-body {
-  padding: 10px;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.bot-message {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 10px;
-  animation: fadeIn 0.5s ease-in;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.bot-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-.bot-message p {
-  background: #070707;
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 10px;
-  max-width: 230px;
-  font-size: 14px;
-  line-height: 1.4em;
-}
-
-.options button {
-  margin: 5px;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 8px;
-  background-color: #0059b3;
-  color: white;
-  cursor: pointer;
-  font-size: 14px;
-  transition: 0.3s;
-}
-
-.options button:hover {
-  background-color: #003d80;
-  transform: scale(1.05);
-}
-
-/* === CHAT ICON === */
-#chatbot-icon {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  width: 80px;
-  height: 80px;
-  cursor: pointer;
-  z-index: 9998;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: float 3s ease-in-out infinite;
-  border-radius: 50%;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-#chatbot-icon:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 25px rgba(37, 99, 235, 0.6);
-}
-
-/* Message "Salut 👋" */
-#chatbot-greeting {
-  position: fixed;
-  bottom: 120px;
-  right: 40px;
-  background: rgba(37, 99, 235, 0.9);
-  color: white;
-  padding: 6px 10px;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  pointer-events: none;
-  z-index: 9997;
-}
-
-#chatbot-icon:hover + #chatbot-greeting {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-  </style>
+/* === CHATBOT CSS === */
+#chatbot-container { position:fixed; bottom:20px; right:20px; width:360px; background:linear-gradient(180deg,#f8faff,#e6f0ff); border-radius:16px; box-shadow:0 6px 20px rgba(0,0,0,0.3); overflow:hidden; font-family:"Segoe UI",sans-serif; z-index:9999; display:none; }
+#chatbot-header { background:#0059b3; color:white; padding:12px; display:flex; align-items:center; justify-content:space-between; }
+#chatbot-header img { width:50px; height:50px; border-radius:50%; border:2px solid white; }
+#close-chat { background:none; border:none; color:white; font-size:18px; cursor:pointer; }
+#chatbot-body { padding:10px; max-height:300px; overflow-y:auto; }
+.bot-message { display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; animation:fadeIn 0.5s ease-in; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0);} }
+.bot-img { width:50px; height:50px; border-radius:50%; }
+.bot-message p { background:#070707; color:#fff; padding:8px 12px; border-radius:10px; max-width:230px; font-size:14px; line-height:1.4em; }
+.options button { margin:5px; padding:8px 12px; border:none; border-radius:8px; background-color:#0059b3; color:white; cursor:pointer; font-size:14px; transition:0.3s; }
+.options button:hover { background-color:#003d80; transform:scale(1.05); }
+#chatbot-icon { position:fixed; bottom:25px; right:25px; width:80px; height:80px; cursor:pointer; z-index:9998; transition:transform 0.3s ease, box-shadow 0.3s ease; animation:float 3s ease-in-out infinite; border-radius:50%; }
+@keyframes float { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-8px);} }
+#chatbot-icon:hover { transform:scale(1.1); box-shadow:0 0 25px rgba(37,99,235,0.6);}
+#chatbot-greeting { position:fixed; bottom:120px; right:40px; background:rgba(37,99,235,0.9); color:white; padding:6px 10px; border-radius:10px; font-size:0.9rem; opacity:0; transform:translateY(10px); transition:opacity 0.3s ease, transform 0.3s ease; pointer-events:none; z-index:9997; }
+#chatbot-icon:hover + #chatbot-greeting { opacity:1; transform:translateY(0); }
+</style>
 </head>
-
 <body>
-  <header>
-    <h1>Mes Projets — David Sileu</h1>
-    <nav>
-      <a href="index.html">Accueil</a>
-      <a href="projet.html">Projets</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
 
-  <main>
-    <section id="projets">
-      <h2>Présentation de mes projets</h2>
+<header>
+  <h1>Mes Projets — David Sileu</h1>
+  <nav>
+    <a href="index.html">Accueil</a>
+    <a href="projet.html">Projets</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
 
-      <article>
-        <h3>Réseau hospitalier et cybersécurité</h3>
-        <p>
-          J’ai participé à la mise en place du système d'information d’un <strong>hôpital militaire</strong> :
-          création d’une architecture réseau complète, câblage, routage et sécurisation du trafic interne.
-        </p>
-        <h4>État initial de l’infrastructure</h4>
-        <img src="Image/initial.png" alt="État initial du réseau">
-        <h4>Bâtiment secondaire avant déploiement</h4>
-        <img src="Image/batimentsecond.png" alt="État du bâtiment secondaire">
-        <h4>Interconnexion et mise en place du réseau</h4>
-        <img src="Image/nouveau reseaux ngaoundere.png" alt="Installation du réseau">
-        <h4>Maquette finale du réseau optimisé</h4>
-        <img src="Image/reseau optimiser.png" alt="Maquette finale du réseau">
-      </article>
-
-      <article>
-        <h3>Module Arduino — Capteurs de température</h3>
-        <p>
-          Conception d’un <strong>module de contrôle de température</strong> permettant de mesurer la température ambiante et corporelle, avec transmission des données sur un tableau de bord.
-        </p>
-        <img src="Image/controleur de temperature.png" alt="Module Arduino de contrôle de température">
-      </article>
-
-      <div class="memoire">
-        <h3>📘 Mon mémoire de fin d'études</h3>
-        <p>
-          Dans le cadre de ma licence en <strong>Réseaux et Télécommunications</strong>, 
-          j’ai rédigé un mémoire portant sur la <strong>cybersécurité et la gestion optimisée des réseaux</strong>.  
-          Vous pouvez le consulter directement en ligne ou le télécharger pour lecture hors connexion.
-        </p>
-
-        <div class="boutons-livre">
-          <a href="livres/david-projet-memoire-fin.pdf" target="_blank" class="btn-consulter">📖 Consulter en ligne</a>
-          <a href="livres/david-projet-memoire-fin.pdf" download class="btn-telecharger">⬇️ Télécharger le mémoire</a>
-        </div>
-
-        <iframe src="livres/david-projet-memoire-fin.pdf" width="100%" height="600px" style="border: 2px solid #2563eb; border-radius: 8px; margin-top: 1rem;"></iframe>
-      </div>
-
-      <article>
-        <h3>Prototype IA locale et lunettes connectées</h3>
-        <p>
-          Le projet des <strong>lunettes connectées</strong> 🕶️ est encore en phase de planification pour le moment.
-          David espère concrétiser ce prototype bientôt : des lunettes capables de traduire, transcrire et reconnaître des lieux touristiques en temps réel.
-        </p>
-      </article>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 — David Sileu | Réseaux • Cybersécurité • Intelligence Artificielle</p>
-  </footer>
-
-  <!-- === CHATBOT === -->
-  <div id="chatbot-container">
-    <div id="chatbot-header">
-      <img id="chatbot-avatar" src="Image/image-david-neutre.png" alt="Assistant Virtuel" />
-      <span><strong>Assistant Virtuel — Section Projets</strong></span>
-      <button id="reduce-btn">−</button>
+<main>
+<section id="projets">
+  <h2>Présentation de mes projets</h2>
+  <article>
+    <h3>Réseau hospitalier et cybersécurité</h3>
+    <p>J’ai participé à la mise en place du système d'information d’un <strong>hôpital militaire</strong> : création d’une architecture réseau complète, câblage, routage et sécurisation du trafic interne.</p>
+    <h4>État initial de l’infrastructure</h4>
+    <img src="Image/initial.png" alt="État initial du réseau">
+    <h4>Bâtiment secondaire avant déploiement</h4>
+    <img src="Image/batimentsecond.png" alt="Bâtiment secondaire">
+    <h4>Interconnexion et mise en place du réseau</h4>
+    <img src="Image/nouveau reseaux ngaoundere.png" alt="Installation du réseau">
+    <h4>Maquette finale du réseau optimisé</h4>
+    <img src="Image/reseau optimiser.png" alt="Maquette finale">
+  </article>
+  <article>
+    <h3>Module Arduino — Capteurs de température</h3>
+    <p>Conception d’un <strong>module de contrôle de température</strong> permettant de mesurer la température ambiante et corporelle, avec transmission des données sur un tableau de bord.</p>
+    <img src="Image/controleur de temperature.png" alt="Module Arduino">
+  </article>
+  <div class="memoire">
+    <h3>📘 Mon mémoire de fin d'études</h3>
+    <p>Dans le cadre de ma licence en <strong>Réseaux et Télécommunications</strong>, j’ai rédigé un mémoire portant sur la <strong>cybersécurité et la gestion optimisée des réseaux</strong>. Vous pouvez le consulter ou le télécharger.</p>
+    <div class="boutons-livre">
+      <a href="livres/david-projet-memoire-fin.pdf" target="_blank" class="btn-consulter">📖 Consulter en ligne</a>
+      <a href="livres/david-projet-memoire-fin.pdf" download class="btn-telecharger">⬇️ Télécharger le mémoire</a>
     </div>
-    <div id="chatbot-body">
-      <div class="bot-message">
-        <img class="bot-img" src="Image/image-david-presentation.png" alt="bot" />
-        <p>Salut 👋 Je suis l’assistant virtuel de David ! Tu veux en savoir plus sur ses projets ?</p>
-      </div>
-      <div class="options">
-        <button onclick="handleChoice('hopital')">Réseau hospitalier</button>
-        <button onclick="handleChoice('arduino')">Module Arduino</button>
-        <button onclick="handleChoice('lunettes')">Lunettes connectées</button>
-        <button onclick="handleChoice('ia')">IA locale</button>
-      </div>
-    </div>
+    <iframe src="livres/david-projet-memoire-fin.pdf" width="100%" height="600px" style="border:2px solid #2563eb;border-radius:8px;margin-top:1rem;"></iframe>
   </div>
+  <article>
+    <h3>Prototype IA locale et lunettes connectées</h3>
+    <p>Le projet des <strong>lunettes connectées</strong> 🕶️ est encore en planification. David espère concrétiser ce prototype bientôt : lunettes capables de traduire, transcrire et reconnaître des lieux touristiques en temps réel.</p>
+  </article>
+</section>
+</main>
 
-  <script>
-    const chatbot = document.getElementById("chatbot-container");
-    const reduceBtn = document.getElementById("reduce-btn");
+<footer>
+<p>© 2025 — David Sileu | Réseaux • Cybersécurité • Intelligence Artificielle</p>
+</footer>
 
-    let minimized = false;
-    reduceBtn.onclick = () => {
-      minimized = !minimized;
-      if (minimized) {
-        chatbot.style.width = "80px";
-        chatbot.style.height = "80px";
-        chatbot.style.borderRadius = "50%";
-        chatbotBody.style.display = "none";
-        reduceBtn.textContent = "+";
-      } else {
-        chatbot.style.width = "360px";
-        chatbot.style.height = "auto";
-        chatbot.style.borderRadius = "16px";
-        chatbotBody.style.display = "block";
-        reduceBtn.textContent = "−";
-      }
-    };
-
-    function addBotMessage(text) {
-      const msg = document.createElement("div");
-      msg.classList.add("bot-message");
-      msg.innerHTML = `<img class="bot-img" src="Image/image-david-neutre.png" alt="bot"><p>${text}</p>`;
-      chatbotBody.appendChild(msg);
-      chatbotBody.scrollTop = chatbotBody.scrollHeight;
-    }
-
-    function handleChoice(choice) {
-      if (choice === "hopital") addBotMessage("David a conçu le réseau complet d’un hôpital militaire 🏥 — un vrai défi de connectivité !");
-      else if (choice === "arduino") addBotMessage("Le module Arduino 🌡️ permet de surveiller la température avec précision, malgré quelques galères de calibration !");
-      else if (choice === "lunettes") addBotMessage("Les lunettes connectées sont encore à l’état de planification, mais le projet avance 🕶️.");
-      else if (choice === "ia") addBotMessage("L’IA locale vise à rendre l’intelligence artificielle totalement indépendante du cloud 🤖.");
-    }
-  </script>
-  <!-- === CHAT ICON (réduit par défaut) === -->
-<img id="chatbot-icon" src="Image/image-david-neutre.png" alt="Assistant Virtuel" onclick="openChat()" />
+<!-- === CHAT ICON === -->
+<img id="chatbot-icon" src="Image/image-david-neutre.png" alt="Assistant Virtuel" onclick="openChat()">
 <div id="chatbot-greeting">Salut 👋</div>
 
-<!-- === CHATBOT COMPLET === -->
+<!-- === CHATBOT === -->
 <div id="chatbot-container">
   <div id="chatbot-header">
     <div style="display:flex;align-items:center;gap:10px;">
-      <img id="chatbot-avatar" src="Image/image-david-neutre.png" alt="Assistant Virtuel" />
-      <span><strong>Assistant Virtuel - Version 1.6</strong></span>
+      <img id="chatbot-avatar" src="Image/image-david-neutre.png" alt="Assistant Virtuel">
+      <span><strong>Assistant Virtuel - Projets</strong></span>
     </div>
     <button id="close-chat" onclick="closeChat()">✖</button>
   </div>
-  <div id="chatbot-body">
-    <div class="bot-message">
-      <img class="bot-img" src="Image/image-david-neutre.png" alt="bot neutre" />
-      <p>Salut 👋 ! Je suis ton assistant virtuel. Tu veux découvrir les projets de David ?</p>
-      <div class="options">
-        <button onclick="handleChoice('projets')">Ses projets</button>
-        <button onclick="handleChoice('difficultes')">Ses difficultés</button>
-        <button onclick="handleChoice('autres_pages')">Explorer le site</button>
-      </div>
-    </div>
-  </div>
+  <div id="chatbot-body"></div>
 </div>
+
 <script>
-  const chatbotContainer = document.getElementById("chatbot-container");
-  const chatbotIcon = document.getElementById("chatbot-icon");
-  const chatbotBody = document.getElementById("chatbot-body");
+const chatbotContainer = document.getElementById("chatbot-container");
+const chatbotIcon = document.getElementById("chatbot-icon");
+const chatbotBody = document.getElementById("chatbot-body");
 
-  function openChat() {
-    chatbotContainer.style.display = "block";
-    chatbotIcon.style.display = "none";
-  }
+function openChat() { 
+  chatbotContainer.style.display="block"; 
+  chatbotIcon.style.display="none"; 
+  initChat(); 
+}
+function closeChat() { 
+  chatbotContainer.style.display="none"; 
+  chatbotIcon.style.display="block"; 
+}
 
-  function closeChat() {
-    chatbotContainer.style.display = "none";
-    chatbotIcon.style.display = "block";
-  }
+function addBotMessage(text, mood="neutre") {
+  const msg = document.createElement("div");
+  msg.classList.add("bot-message");
+  const img = document.createElement("img");
+  img.classList.add("bot-img");
+  img.src = mood==="joyeux" ? "Image/image-david-presentation.png" :
+            mood==="vexe" ? "Image/image-david-presentation-embarasser.png" :
+            "Image/image-david-neutre.png";
+  const p = document.createElement("p");
+  p.textContent = text;
+  msg.appendChild(img);
+  msg.appendChild(p);
+  chatbotBody.appendChild(msg);
+  chatbotBody.scrollTop = chatbotBody.scrollHeight;
+}
 
-  function addBotMessage(text, mood = "neutre") {
-    const message = document.createElement("div");
-    message.classList.add("bot-message");
+function showOptions(options) {
+  const btnContainer = document.createElement("div");
+  btnContainer.classList.add("options");
+  options.forEach(opt=>{
+    const btn = document.createElement("button");
+    btn.textContent = opt.text;
+    btn.onclick = ()=>handleChoice(opt.action);
+    btnContainer.appendChild(btn);
+  });
+  chatbotBody.appendChild(btnContainer);
+  chatbotBody.scrollTop = chatbotBody.scrollHeight;
+}
 
-    const img = document.createElement("img");
-    img.classList.add("bot-img");
-    img.src = mood === "joyeux"
-      ? "Image/image-david-presentation.png"
-      : mood === "vexe"
-      ? "Image/image-david-presentation-embarasser.png"
-      : "Image/image-david-neutre.png";
+const conversation = {
+  start:[
+    {text:"Salut ! Je suis l’assistant virtuel de David. Veux-tu découvrir ses projets en détail ?", mood:"joyeux"},
+    {options:[
+      {text:"Oui, je veux découvrir", action:"introProjets"},
+      {text:"Juste un aperçu rapide", action:"resume"}
+    ]}
+  ],
+  introProjets:[
+    {text:"David travaille sur plusieurs projets : un réseau hospitalier, un module Arduino, des lunettes connectées et une IA locale.", mood:"joyeux"},
+    {options:[
+      {text:"Réseau hospitalier", action:"hopital"},
+      {text:"Module Arduino", action:"arduino"},
+      {text:"Lunettes connectées", action:"lunettes"},
+      {text:"IA locale", action:"ia"}
+    ]}
+  ],
+  resume:[
+    {text:"En résumé, David fait de la cybersécurité, de l’IoT avec Arduino, des lunettes intelligentes et développe une IA locale.", mood:"neutre"},
+    {options:[
+      {text:"En savoir plus", action:"introProjets"},
+      {text:"Merci, c’est suffisant", action:"end"}
+    ]}
+  ],
+  hopital:[
+    {text:"Le réseau hospitalier 🏥 est un système complet pour un hôpital militaire, avec câblage, routage et sécurité.", mood:"joyeux"},
+    {options:[
+      {text:"Voir les difficultés rencontrées", action:"diffHopital"},
+      {text:"Autre projet", action:"introProjets"}
+    ]}
+  ],
+  diffHopital:[
+    {text:"Les principales difficultés étaient :", mood:"vexe"},
+    {text:"1️⃣ Manque de fonds pour acheter le matériel nécessaire.", mood:"neutre"},
+    {text:"2️⃣ Tracasseries administratives et longues procédures.", mood:"neutre"},
+    {text:"3️⃣ Coordination complexe entre plusieurs équipes.", mood:"neutre"},
+    {options:[
+      {text:"Revenir aux projets", action:"introProjets"},
+      {text:"Finir la conversation", action:"end"}
+    ]}
+  ],
+  arduino:[
+    {text:"Le module Arduino 🌡️ permet de mesurer température ambiante et corporelle avec transmission des données.", mood:"joyeux"},
+    {options:[
+      {text:"Voir les difficultés rencontrées", action:"diffArduino"},
+      {text:"Autre projet", action:"introProjets"}
+    ]}
+  ],
+  diffArduino:[
+    {text:"Ah, le module Arduino… entre mon portefeuille vide et mon PC qui râle 😅", mood:"vexe"},
+    {text:"1️⃣ Limitation matérielle : j’avais à peine le matériel nécessaire pour tester les capteurs 💸", mood:"neutre"},
+    {text:"2️⃣ Problèmes techniques : ces mini-capteurs sont capricieux, et moi j’avais peu d’expérience 🤓", mood:"neutre"},
+    {text:"3️⃣ Optimisation logicielle : intégrer le tout en temps réel, c’était presque de la magie noire 🧙‍♂️", mood:"neutre"},
+    {options:[
+      {text:"Revenir aux projets", action:"introProjets"},
+      {text:"Finir la conversation", action:"end"}
+    ]}
+  ],
+  lunettes:[
+    {text:"Les lunettes connectées 🕶️ sont encore en phase de planification mais permettront de traduire et reconnaître l'environnement.", mood:"joyeux"},
+    {options:[
+      {text:"Voir les difficultés rencontrées", action:"diffLunettes"},
+      {text:"Autre projet", action:"introProjets"}
+    ]}
+  ],
+  diffLunettes:[
+    {text:"Ah, les lunettes connectées… un vrai défi 😅", mood:"vexe"},
+    {text:"1️⃣ Manque de financement pour acheter les composants à tester : mon portefeuille me supplie d'arrêter 💸", mood:"neutre"},
+    {text:"2️⃣ Problèmes techniques liés aux capteurs miniatures : ces petits gadgets sont parfois capricieux 🤓", mood:"neutre"},
+    {text:"3️⃣ Complexité d'intégration logicielle et reconnaissance en temps réel : le code adore me jouer des tours 🧙‍♂️", mood:"neutre"},
+    {options:[
+      {text:"Revenir aux projets", action:"introProjets"},
+      {text:"Finir la conversation", action:"end"}
+    ]}
+],
+  ia:[
+    {text:"L’IA locale vise à rendre l'intelligence artificielle totalement indépendante du cloud 🤖.", mood:"joyeux"},
+    {options:[
+      {text:"Voir les difficultés rencontrées", action:"diffIA"},
+      {text:"Autre projet", action:"introProjets"}
+    ]}
+  ],
+  diffIA:[
+    {text:"Ah, l’IA locale… un vrai casse-tête pour mon pauvre ordinateur 😅", mood:"vexe"},
+    {text:"1️⃣ Limitation matérielle : son PC ressemble à une tortue quand il essaie d’entraîner un modèle IA.", mood:"neutre"},
+    {text:"2️⃣ Apprentissage et tests : parfois chaque calcul prend une éternité ⏳… Merci l’optimisation inexistante !", mood:"neutre"},
+    {text:"3️⃣ Gestion des données : stocker localement, c’est bien… mais quand le disque dur est au bord de l’asphyxie, je l’entends presque 😅", mood:"neutre"},
+    {options:[
+      {text:"Revenir aux projets", action:"introProjets"},
+      {text:"Finir la conversation", action:"end"}
+    ]}
+  ],
+  end:[
+    {text:"Merci pour la discussion ! N'hésite pas à revenir si tu veux en savoir plus.", mood:"joyeux"}
+  ]
+};
 
-    const p = document.createElement("p");
-    p.textContent = text;
+function runScenario(step){
+  chatbotBody.innerHTML=""; 
+  const scenario = conversation[step];
+  if(!scenario) return;
+  scenario.forEach(s=>{
+    if(s.text) addBotMessage(s.text, s.mood);
+    if(s.options) showOptions(s.options);
+  });
+}
 
-    message.appendChild(img);
-    message.appendChild(p);
-    chatbotBody.appendChild(message);
-    chatbotBody.scrollTop = chatbotBody.scrollHeight;
-  }
-
-  function showOptions(options) {
-    const btnContainer = document.createElement("div");
-    btnContainer.classList.add("options");
-    options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = opt.text;
-      btn.onclick = () => handleChoice(opt.action);
-      btnContainer.appendChild(btn);
-    });
-    chatbotBody.appendChild(btnContainer);
-    chatbotBody.scrollTop = chatbotBody.scrollHeight;
-  }
-
-  function handleChoice(choice) {
-    if (choice === "projets") {
-      addBotMessage("David travaille sur plusieurs projets fascinants :", "joyeux");
-      addBotMessage("🔹 Un système d'information hospitalier sécurisé", "neutre");
-      addBotMessage("🔹 Des lunettes connectées encore à l'état de planification 👓", "joyeux");
-      addBotMessage("🔹 Une IA locale totalement autonome", "joyeux");
-      showOptions([
-        { text: "Les difficultés rencontrées", action: "difficultes" },
-        { text: "Voir la page projet", action: "open_projet" }
-      ]);
-    } 
-    else if (choice === "difficultes") {
-      addBotMessage("Réaliser ces projets n’a pas été facile !", "vexe");
-      addBotMessage("Il a dû faire face à un manque de matériel, peu de ressources GPU et beaucoup de nuits blanches 💻☕.", "neutre");
-      addBotMessage("Mais chaque difficulté l’a rendu plus ingénieux et déterminé.", "joyeux");
-      showOptions([
-        { text: "Explorer ses projets", action: "projets" },
-        { text: "Retour à l'accueil", action: "accueil" }
-      ]);
-    } 
-    else if (choice === "autres_pages") {
-      addBotMessage("Tu veux aller où ?", "joyeux");
-      showOptions([
-        { text: "Accueil", action: "accueil" },
-        { text: "Page projets", action: "open_projet" },
-        { text: "Contact", action: "open_contact" }
-      ]);
-    } 
-    else if (choice === "open_projet") {
-      window.location.href = "projet.html";
-    } 
-    else if (choice === "open_contact") {
-      window.location.href = "contact.html";
-    } 
-    else if (choice === "accueil") {
-      window.location.href = "index.html";
-    }
-  }
+function initChat(){ runScenario("start"); }
+function handleChoice(choice){ runScenario(choice); }
 </script>
 
 </body>
