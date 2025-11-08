@@ -52,15 +52,19 @@
       background-color: #2563eb;
       color: #fff;
       border: none;
-      border-radius: 5px;
-      padding: 0.75rem;
+      border-radius: 8px;
+      padding: 0.8rem;
       cursor: pointer;
-      font-size: 1rem;
-      transition: background 0.3s ease;
+      font-size: 1.1rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
     }
 
     button:hover {
       background-color: #1d4ed8;
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
     }
 
     .intro {
@@ -97,7 +101,7 @@
       à améliorer la <strong>productivité de votre entreprise</strong> ou de votre projet.
     </p>
 
-    <form id="contact-form" data-form-type="contact" aria-label="Formulaire de contact">
+    <form id="contact-form" aria-label="Formulaire de contact">
       <label for="nom">Nom :</label>
       <input id="nom" name="nom" type="text" placeholder="Votre nom complet" required>
 
@@ -116,12 +120,27 @@
       <label for="message">Message :</label>
       <textarea id="message" name="message" rows="6" placeholder="Votre message ici..." required></textarea>
 
-      <button type="submit">Envoyer</button>
+      <button type="submit">📩 Envoyer le message</button>
     </form>
   </main>
 
   <footer>
     © 2025 David Sileu — Tous droits réservés
   </footer>
+
+  <script>
+    document.getElementById("contact-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const nom = document.getElementById("nom").value;
+      const email = document.getElementById("email").value;
+      const sujet = document.getElementById("sujet").value;
+      const message = document.getElementById("message").value;
+
+      const mailtoLink = `mailto:david.sileu@example.com?subject=${encodeURIComponent("Contact via le site — " + sujet)}&body=${encodeURIComponent("Nom : " + nom + "\nEmail : " + email + "\n\nMessage :\n" + message)}`;
+      
+      window.location.href = mailtoLink;
+    });
+  </script>
 </body>
 </html>
