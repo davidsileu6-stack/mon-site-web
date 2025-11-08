@@ -3,31 +3,64 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Formulaire de contact — disponible pour vos besoins en sécurité informatique, réseaux et solutions IA pour améliorer la productivité de votre entreprise ou projet.">
+  <meta name="description" content="Contactez David Sileu — expert en sécurité informatique, réseaux et solutions IA.">
   <title>Contact | David Sileu</title>
   <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-color: #f4f6f8;
+      --text-color: #333;
+      --header-bg: #1e293b;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f8;
-      color: #333;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       margin: 0;
       padding: 0;
     }
 
     header {
-      background-color: #1e293b;
+      background-color: var(--header-bg);
       color: #fff;
-      text-align: center;
       padding: 1.5rem;
+      text-align: center;
+    }
+
+    nav {
+      text-align: center;
+      background: #e2e8f0;
+      padding: 0.8rem 0;
+    }
+
+    nav a {
+      color: var(--header-bg);
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--primary-color);
     }
 
     main {
-      max-width: 600px;
+      max-width: 650px;
       margin: 2rem auto;
       background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 2.5rem;
+    }
+
+    .intro {
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: justify;
     }
 
     form {
@@ -44,41 +77,53 @@
       width: 100%;
       padding: 0.75rem;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 6px;
       font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--primary-color);
+      outline: none;
     }
 
     button {
-      background-color: #2563eb;
+      background-color: var(--primary-color);
       color: #fff;
       border: none;
-      border-radius: 8px;
-      padding: 0.8rem;
+      border-radius: 6px;
+      padding: 0.9rem;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: bold;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+      transition: transform 0.2s ease, background-color 0.3s ease;
     }
 
     button:hover {
-      background-color: #1d4ed8;
-      transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
     }
 
-    .intro {
-      margin-bottom: 1.5rem;
-      font-size: 1rem;
-      line-height: 1.6;
-      text-align: justify;
+    .contact-direct {
+      background-color: #10b981;
+      display: inline-block;
+      margin-top: 1rem;
+      text-align: center;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .contact-direct:hover {
+      background-color: #059669;
+      transform: scale(1.05);
     }
 
     footer {
       text-align: center;
       font-size: 0.9rem;
       color: #666;
-      margin-bottom: 2rem;
+      margin: 2rem 0;
     }
 
     @media (max-width: 600px) {
@@ -89,10 +134,17 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <h1>Contact</h1>
   </header>
+
+  <nav>
+    <a href="index.html">🏠 Accueil</a>
+    <a href="projets.html">💡 Projets</a>
+    <a href="contact.html" class="active">📨 Contact</a>
+  </nav>
 
   <main>
     <p class="intro">
@@ -120,28 +172,18 @@
       <label for="message">Message :</label>
       <textarea id="message" name="message" rows="6" placeholder="Votre message ici..." required></textarea>
 
-      <button type="submit">Envoyer le message</button>
+      <button type="submit">Envoyer</button>
     </form>
+
+    <!-- BOUTON MAILTO DIRECT -->
+    <a href="mailto:david.sileu@email.com?subject=Contact%20depuis%20le%20site&body=Bonjour%20David," 
+       class="contact-direct button">
+      📬 Contacter directement via votre messagerie
+    </a>
   </main>
 
   <footer>
     © 2025 David Sileu — Tous droits réservés
   </footer>
-
-  <script>
-    document.getElementById("contact-form").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const nom = document.getElementById("nom").value;
-      const email = document.getElementById("email").value;
-      const sujet = document.getElementById("sujet").value;
-      const message = document.getElementById("message").value;
-
-      const mailtoLink = `mailto:david.sileu@example.com?subject=${encodeURIComponent("Contact via le site — " + sujet)}&body=${encodeURIComponent("Nom : " + nom + "\nEmail : " + email + "\n\nMessage :\n" + message)}`;
-      
-      window.location.href = mailtoLink;
-    });
-  </script>
 </body>
 </html>
-
