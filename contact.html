@@ -181,10 +181,45 @@
       📬 Contacter directement via votre messagerie
     </a>
   </main>
+<img id="chatbot-icon" src="Image/image-david-neutre.png" alt="Assistant Virtuel" onclick="openChat()" />
+  <div id="chatbot-greeting">Salut 👋</div>
+
+  <!-- === CHATBOT === -->
+  <div id="chatbot-container">
+    <div id="chatbot-header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img src="Image/image-david-neutre.png" alt="bot" width="50" height="50" />
+        <span><strong>Assistant Virtuel - Contact</strong></span>
+      </div>
+      <button id="close-chat" onclick="closeChat()">✖</button>
+    </div>
+    // Fonction de fin de conversation du chatbot
+function endConversation() {
+  const finalMessages = [
+    { text: "Merci d’avoir pris le temps de discuter avec moi 😊", mood: "chaleureux" },
+    { text: "J’espère sincèrement que cette collaboration ne fait que commencer 💪", mood: "souriant" },
+    { text: "À très bientôt pour de nouvelles idées et projets ensemble ! 🚀", mood: "enthousiaste" }
+  ];
+
+  // Affiche les messages un par un
+  displayBotMessages(finalMessages);
+}
+
+// Exemple de fonction d’affichage (à adapter selon ton code existant)
+function displayBotMessages(messages) {
+  let delay = 0;
+  messages.forEach((msg) => {
+    setTimeout(() => {
+      addChatMessage(msg.text, "bot");
+    }, delay);
+    delay += 1500; // délai de 1,5 seconde entre chaque message
+  });
+}
 
   <footer>
     © 2025 David Sileu — Tous droits réservés
   </footer>
 </body>
 </html>
+
 
