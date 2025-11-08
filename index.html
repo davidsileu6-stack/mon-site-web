@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio — David Sileu</title>
+  <title>Contact | David Sileu</title>
 
   <style>
     body {
@@ -22,11 +22,6 @@
       border-bottom: 3px solid #2563eb;
     }
 
-    header h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.3rem;
-    }
-
     nav a {
       color: #93c5fd;
       margin: 0 10px;
@@ -37,27 +32,56 @@
     nav a:hover { color: #3b82f6; }
 
     main {
-      max-width: 900px;
-      margin: 1.5rem auto;
+      max-width: 700px;
+      margin: 2rem auto;
       background: rgba(51, 65, 85, 0.95);
-      padding: 1.5rem;
+      padding: 2rem;
       border-radius: 10px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     }
 
-    section h2 {
+    h2 {
       color: #60a5fa;
       border-left: 4px solid #3b82f6;
       padding-left: 10px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
       margin-top: 1rem;
     }
 
-    img {
+    label {
+      font-weight: bold;
+      color: #dbeafe;
+    }
+
+    input, select, textarea {
       width: 100%;
-      max-width: 250px;
-      border-radius: 8px;
-      display: block;
-      margin: 1rem auto;
+      padding: 0.75rem;
+      border: 1px solid #93c5fd;
+      border-radius: 5px;
+      background-color: #f8fafc;
+      color: #0f172a;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 0.75rem;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1d4ed8;
+      transform: scale(1.03);
     }
 
     footer {
@@ -69,7 +93,7 @@
       font-size: 0.9rem;
     }
 
-    /* === CHATBOT === */
+    /* === CHATBOT & ICON === */
     #chatbot-container {
       position: fixed;
       bottom: 20px;
@@ -92,13 +116,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-
-    #chatbot-header img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      border: 2px solid white;
     }
 
     #close-chat {
@@ -161,7 +178,6 @@
       transform: scale(1.05);
     }
 
-    /* === Tete de mon chat bot === */
     #chatbot-icon {
       position: fixed;
       bottom: 25px;
@@ -185,7 +201,6 @@
       box-shadow: 0 0 25px rgba(37, 99, 235, 0.6);
     }
 
-    /* Message "Salut 👋" */
     #chatbot-greeting {
       position: fixed;
       bottom: 120px;
@@ -206,17 +221,12 @@
       opacity: 1;
       transform: translateY(0);
     }
-
-    @media (max-width: 600px) {
-      #chatbot-container { bottom: 10px; right: 10px; }
-      #chatbot-icon { width: 65px; height: 65px; }
-    }
   </style>
 </head>
 
 <body>
   <header>
-    <h1>Tchouaga Sileu David Emmanuel</h1>
+    <h1>Contactez-moi</h1>
     <nav>
       <a href="index.html">Accueil</a>
       <a href="projet.html">Projets</a>
@@ -225,140 +235,77 @@
   </header>
 
   <main>
-    <section id="presentation">
-      <h2>Ma modeste personne</h2>
-      <p>
-        Bonjour, je m'appelle <strong>David Sileu</strong>, passionné par les technologies.
-        Je suis titulaire d’une licence en Réseaux et Télécommunications et possède de solides
-        compétences en cybersécurité. Actuellement étudiant en Intelligence Artificielle au
-        <strong>Collège CDI</strong>, je cherche à combiner sécurité, connectivité et IA
-        pour créer des solutions innovantes et efficaces.
-      </p>
-      <img src="Image/costume.jpg" alt="Photo de profil" />
-    </section>
+    <h2>Formulaire de contact</h2>
+    <p>Vous pouvez me joindre pour toute question, proposition ou collaboration.</p>
 
-    <section id="hobbies">
-      <h2>Mes hobbies</h2>
-      <ul>
-        <li>Pratique du football</li>
-        <li>Grand amateur de films et séries d’animation</li>
-        <li>Cuisine</li>
-      </ul>
-    </section>
+    <form onsubmit="return openMail();">
+      <label for="nom">Nom :</label>
+      <input id="nom" name="nom" type="text" placeholder="Votre nom complet" required>
+
+      <label for="email">Email :</label>
+      <input id="email" name="email" type="email" placeholder="exemple@email.com" required>
+
+      <label for="sujet">Sujet :</label>
+      <input id="sujet" name="sujet" type="text" placeholder="Sujet de votre message" required>
+
+      <label for="message">Message :</label>
+      <textarea id="message" name="message" rows="6" placeholder="Votre message ici..." required></textarea>
+
+      <button type="submit">📧 Envoyer via votre messagerie</button>
+    </form>
   </main>
 
   <footer>
     <p>© 2025 — David Sileu</p>
   </footer>
 
-  <!-- === CHAT ICON (réduit par défaut) === -->
+  <!-- === CHAT ICON === -->
   <img id="chatbot-icon" src="Image/image-david-neutre.png" alt="Assistant Virtuel" onclick="openChat()" />
   <div id="chatbot-greeting">Salut 👋</div>
 
-  <!-- === CHATBOT COMPLET === -->
+  <!-- === CHATBOT === -->
   <div id="chatbot-container">
     <div id="chatbot-header">
       <div style="display:flex;align-items:center;gap:10px;">
-        <img id="chatbot-avatar" src="Image/image-david-neutre.png" alt="Assistant Virtuel" />
-        <span><strong>Assistant Virtuel - Version 1.6</strong></span>
+        <img src="Image/image-david-neutre.png" alt="bot" width="50" height="50" />
+        <span><strong>Assistant Virtuel - Contact</strong></span>
       </div>
       <button id="close-chat" onclick="closeChat()">✖</button>
     </div>
     <div id="chatbot-body">
       <div class="bot-message">
-        <img class="bot-img" src="Image/image-david-neutre.png" alt="bot neutre" />
-        <p>Salut 👋 ! Je suis ton assistant virtuel. Tu veux apprendre à mieux connaître David ?</p>
-        <div class="options">
-          <button onclick="handleChoice('qui')">Qui est David ?</button>
-          <button onclick="handleChoice('projets')">Ses projets</button>
-          <button onclick="handleChoice('travail')">Sur quoi il travaille ?</button>
-        </div>
+        <img class="bot-img" src="Image/image-david-neutre.png" alt="bot" />
+        <p>Salut 👋 ! Tu veux discuter d’un projet, d’une idée, ou simplement dire bonjour ?</p>
+      </div>
+      <div class="options">
+        <button onclick="window.location.href='index.html'">Accueil</button>
+        <button onclick="window.location.href='projet.html'">Projets</button>
+        <button onclick="window.location.href='mailto:davidsileu6@gmail.com'">Me contacter</button>
       </div>
     </div>
   </div>
 
   <script>
-    const chatbotContainer = document.getElementById("chatbot-container");
-    const chatbotIcon = document.getElementById("chatbot-icon");
-    const chatbotBody = document.getElementById("chatbot-body");
-
     function openChat() {
-      chatbotContainer.style.display = "block";
-      chatbotIcon.style.display = "none";
+      document.getElementById("chatbot-container").style.display = "block";
+      document.getElementById("chatbot-icon").style.display = "none";
     }
 
     function closeChat() {
-      chatbotContainer.style.display = "none";
-      chatbotIcon.style.display = "block";
+      document.getElementById("chatbot-container").style.display = "none";
+      document.getElementById("chatbot-icon").style.display = "block";
     }
 
-    function addBotMessage(text, mood = "neutre") {
-      const message = document.createElement("div");
-      message.classList.add("bot-message");
+    function openMail() {
+      const nom = document.getElementById('nom').value;
+      const email = document.getElementById('email').value;
+      const sujet = document.getElementById('sujet').value;
+      const message = document.getElementById('message').value;
 
-      const img = document.createElement("img");
-      img.classList.add("bot-img");
-
-      if (mood === "joyeux") img.src = "Image/image-david-presentation.png";
-      else if (mood === "vexe") img.src = "Image/image-david-presentation-embarasser.png";
-      else img.src = "Image/image-david-neutre.png";
-
-      const p = document.createElement("p");
-      p.textContent = text;
-
-      message.appendChild(img);
-      message.appendChild(p);
-      chatbotBody.appendChild(message);
-      chatbotBody.scrollTop = chatbotBody.scrollHeight;
-    }
-
-    function showOptions(options) {
-      const btnContainer = document.createElement("div");
-      btnContainer.classList.add("options");
-      options.forEach(opt => {
-        const btn = document.createElement("button");
-        btn.textContent = opt.text;
-        btn.onclick = () => handleChoice(opt.action);
-        btnContainer.appendChild(btn);
-      });
-      chatbotBody.appendChild(btnContainer);
-      chatbotBody.scrollTop = chatbotBody.scrollHeight;
-    }
-
-    function handleChoice(choice) {
-      if (choice === "qui") {
-        addBotMessage("David Sileu est un passionné de technologie, titulaire d'une licence en Réseaux et Télécommunications.", "joyeux");
-        addBotMessage("Il étudie actuellement l’intelligence artificielle au Collège CDI. Il adore mélanger logique et créativité.", "joyeux");
-        showOptions([
-          { text: "Parle-moi de ses projets", action: "projets" },
-          { text: "Qu’est-ce qu’il fait en ce moment ?", action: "travail" }
-        ]);
-      } else if (choice === "projets") {
-        addBotMessage("David a dirigé un projet majeur : la numérisation du système d’information d’un hôpital militaire via un réseau sécurisé.", "neutre");
-        addBotMessage("Il a aussi conçu un module Arduino de mesure de température pour une meilleure surveillance des patients.", "joyeux");
-        addBotMessage("Et il planifie un projet ambitieux : des lunettes connectées capables d’analyser et traduire l’environnement 👓.", "joyeux");
-        showOptions([
-          { text: "C’est impressionnant ! Comment le contacter ?", action: "contact" },
-          { text: "Dis-m’en plus sur ses études", action: "travail" }
-        ]);
-      } else if (choice === "travail") {
-        addBotMessage("En ce moment, il travaille sur la création d’un assistant virtuel et explore l’IA locale sans dépendance au cloud.", "joyeux");
-        showOptions([
-          { text: "Je veux collaborer avec lui", action: "contact" },
-          { text: "Montre-moi ses anciens projets", action: "projets" }
-        ]);
-      } else if (choice === "contact") {
-        addBotMessage("Super idée 😄 ! Tu peux contacter David : 📧 davidsileu6@gmail.com ou 📱 438-454-5315.", "joyeux");
-        addBotMessage("Il sera ravi d’échanger avec toi !", "joyeux");
-        showOptions([
-          { text: "Merci !", action: "end" },
-          { text: "Encore une question", action: "qui" }
-        ]);
-      } else if (choice === "end") {
-        addBotMessage("À bientôt 👋 et n’oublie pas : les rêves deviennent réels quand on agit !", "joyeux");
-      }
+      const mailtoLink = `mailto:davidsileu6@gmail.com?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent("Nom: " + nom + "\nEmail: " + email + "\n\nMessage:\n" + message)}`;
+      window.location.href = mailtoLink;
+      return false; // Empêche le rechargement de la page
     }
   </script>
 </body>
 </html>
-
