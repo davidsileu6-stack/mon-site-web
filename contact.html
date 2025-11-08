@@ -264,67 +264,125 @@
   <div id="chatbot-greeting">Salut 👋</div>
 
   <!-- === CHATBOT WINDOW === -->
-  <div id="chatbot-container">
-    <div id="chatbot-header">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <img src="Image/image-david-neutre.png" alt="Assistant Virtuel" />
-        <span><strong>Assistant Virtuel</strong></span>
-      </div>
-      <button id="close-chat" onclick="closeChat()">✖</button>
+ <!-- === Chatbot HTML === -->
+<div id="chatbot-container">
+  <div id="chatbot-header">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <img id="chatbot-avatar" src="assets/image-david-neutre.png" alt="Assistant Virtuel" />
+      <span><strong>Assistant Virtuel</strong></span>
     </div>
-    <div id="chatbot-body">
-      <div class="bot-message">
-        <img class="bot-img" src="Image/image-david-neutre.png" />
-        <p>Salut 👋 Je suis le chatbot de David ! Tu veux lui laisser un message ?</p>
-        <div class="options">
-          <button onclick="handleChoice('contact')">Oui, bien sûr !</button>
-          <button onclick="handleChoice('end')">Pas maintenant</button>
-        </div>
-      </div>
-    </div>
+    <button id="close-chat" onclick="closeChat()">✖</button>
   </div>
+  <div id="chatbot-body"></div>
+</div>
 
-  <script>
-    const chatbotContainer = document.getElementById("chatbot-container");
-    const chatbotIcon = document.getElementById("chatbot-icon");
-    const chatbotBody = document.getElementById("chatbot-body");
+<img id="chatbot-icon" src="assets/image-david-neutre.png" alt="Assistant Virtuel" onclick="openChat()" />
+<div id="chatbot-greeting">Salut 👋</div>
 
-    function openChat() {
-      chatbotContainer.style.display = "block";
-      chatbotIcon.style.display = "none";
+<script>
+  const chatbotContainer = document.getElementById("chatbot-container");
+  const chatbotIcon = document.getElementById("chatbot-icon");
+  const chatbotBody = document.getElementById("chatbot-body");
+  const chatbotAvatar = document.getElementById("chatbot-avatar");
+
+  function openChat() {
+    chatbotContainer.style.display = "block";
+    chatbotIcon.style.display = "none";
+  }
+
+  function closeChat() {
+    chatbotContainer.style.display = "none";
+    chatbotIcon.style.display = "block";
+  }
+
+  // Fonction pour ajouter un message avec style
+  function addBotMessage(text, mood = "neutre") {
+    const message = document.createElement("div");
+    message.classList.add("bot-message");
+
+    // Changement de l'image selon le mood
+    switch(mood){
+      case "joyeux":
+        chatbotAvatar.src = "assets/image-david-joyeux.png";
+        break;
+      case "vexe":
+        chatbotAvatar.src = "assets/image-david-vexe.png";
+        break;
+      case "serieux":
+        chatbotAvatar.src = "assets/image-david-serieux.png";
+        break;
+      default:
+        chatbotAvatar.src = "assets/image-david-neutre.png";
     }
 
-    function closeChat() {
-      chatbotContainer.style.display = "none";
-      chatbotIcon.style.display = "block";
+    const img = document.createElement("img");
+    img.classList.add("bot-img");
+    img.src = chatbotAvatar.src;
+    img.alt = "bot";
+
+    const p = document.createElement("p");
+    p.textContent = text;
+
+    message.appendChild(img);
+    message.appendChild(p);
+    chatbotBody.appendChild(message);
+    chatbotBody.scrollTop = chatbotBody.scrollHeight;
+  }
+
+  function showOptions(options) {
+    const btnContainer = document.createElement("div");
+    btnContainer.classList.add("options");
+    options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = opt.text;
+      btn.onclick = () => handleChoice(opt.action);
+      btnContainer.appendChild(btn);
+    });
+    chatbotBody.appendChild(btnContainer);
+    chatbotBody.scrollTop = chatbotBody.scrollHeight;
+  }
+
+  function handleChoice(choice) {
+    if(choice === "qui") {
+      addBotMessage("Je suis David, passionné de tech et IA.", "joyeux");
+      addBotMessage("Je peux t'aider à comprendre comment l'IA peut améliorer ton quotidien.", "serieux");
+      showOptions([
+        { text: "Projets", action: "projets" },
+        { text: "Travail actuel", action: "travail" }
+      ]);
     }
-
-    function addBotMessage(text) {
-      const message = document.createElement("div");
-      message.classList.add("bot-message");
-
-      const img = document.createElement("img");
-      img.classList.add("bot-img");
-      img.src = "Image/image-david-neutre.png";
-
-      const p = document.createElement("p");
-      p.textContent = text;
-
-      message.appendChild(img);
-      message.appendChild(p);
-      chatbotBody.appendChild(message);
-      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    else if(choice === "projets") {
+      addBotMessage("J'ai réalisé des projets technologiques pour des hôpitaux et entreprises.", "serieux");
+      addBotMessage("Je planifie aussi un projet de lunettes connectées 👓.", "joyeux");
+      showOptions([
+        { text: "Contact", action: "contact" },
+        { text: "Études", action: "travail" }
+      ]);
     }
-
-    function handleChoice(choice) {
-      if (choice === "contact") {
-        addBotMessage("Parfait 😄 ! Tu peux lui écrire directement à 📧 davidsileu6@gmail.com ou l’appeler au 📱 438-454-5315.");
-        addBotMessage("En espérant une longue et belle collaboration 🤝 !");
-        addBotMessage("À très bientôt 🚀");
-      } else if (choice === "end") {
-        addBotMessage("Pas de souci 😄 Reviens quand tu veux !");
-      }
+    else if(choice === "travail") {
+      addBotMessage("Je travaille sur un assistant virtuel et IA locale pour la productivité.", "serieux");
+      showOptions([
+        { text: "Je veux collaborer", action: "contact" },
+        { text: "Voir projets", action: "projets" }
+      ]);
     }
-  </script>
+    else if(choice === "contact") {
+      addBotMessage("Tu peux me contacter par email ou téléphone, je serai ravi d’échanger !", "joyeux");
+      addBotMessage("Même si tu es en Afrique, je peux t'aider efficacement 😉", "joyeux");
+      showOptions([
+        { text: "Réserver un appel", action: "reserver" },
+        { text: "Encore une question", action: "qui" }
+      ]);
+    }
+    else if(choice === "reserver") {
+      addBotMessage("Super ! Clique ici pour réserver 👉 <a href='https://calendly.com/' target='_blank'>Réserver un appel</a>", "joyeux");
+    }
+    else if(choice === "end") {
+      addBotMessage("À bientôt 👋 et n’oublie pas : l’action concrétise les rêves !", "joyeux");
+    }
+  }
+</script>
+
 </body>
 </html>
+
