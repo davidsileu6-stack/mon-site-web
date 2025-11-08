@@ -349,29 +349,7 @@
           { text: "Montre-moi ses anciens projets", action: "projets" }
         ]);
       } else if (choice === "contact") {
-    const message = document.createElement("div");
-    message.classList.add("bot-message");
-
-    const img = document.createElement("img");
-    img.classList.add("bot-img");
-    img.src = "Image/image-david-joyeux.png"; // Image pour réponse joyeuse
-
-    const p = document.createElement("p");
-    // Utilisation de innerHTML pour insérer le lien
-    p.innerHTML = 'Super idée 😄 ! Tu peux contacter David : <a href="mailto:davidsileu6@gmail.com" style="color:#60a5fa;text-decoration:underline;">Envoyer un email</a>';
-
-    message.appendChild(img);
-    message.appendChild(p);
-    chatbotBody.appendChild(message);
-    chatbotBody.scrollTop = chatbotBody.scrollHeight;
-
-    showOptions([
-      { text: "Merci !", action: "end" },
-      { text: "Encore une question", action: "qui" }
-    ]);
-  }
-}
-
+        addBotMessage("Super idée 😄 ! Tu peux contacter David : 📧 davidsileu6@gmail.com ou 📱 438-454-5315.", "joyeux");
         addBotMessage("Il sera ravi d’échanger avec toi !", "joyeux");
         showOptions([
           { text: "Merci !", action: "end" },
@@ -384,4 +362,3 @@
   </script>
 </body>
 </html>
-
