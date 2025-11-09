@@ -67,7 +67,7 @@
       font-size: 1rem;
     }
 
-    button {
+    button, .contact-btn {
       background: #2563eb;
       color: white;
       border: none;
@@ -75,10 +75,13 @@
       border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
       transition: background 0.3s ease;
     }
 
-    button:hover { background: #1e40af; }
+    button:hover, .contact-btn:hover { background: #1e40af; }
 
     footer {
       background: rgba(15, 23, 42, 0.9);
@@ -89,7 +92,7 @@
       font-size: 0.9rem;
     }
 
-    /* === CHATBOT STYLES (identiques aux autres pages) === */
+    /* === CHATBOT === */
     #chatbot-container {
       position: fixed;
       bottom: 20px;
@@ -240,17 +243,15 @@
   <main>
     <section id="contact">
       <h2>Entrons en contact</h2>
-      <p>Une idée ? Une collaboration ? Ou juste un bonjour 👋 ? Écrivez-moi ci-dessous.</p>
+      <p>Une idée, une collaboration ou simplement une question ? Je suis toujours heureux d’échanger 👋.</p>
 
       <form id="contact-form">
         <input type="text" name="name" placeholder="Votre nom" required />
         <input type="email" name="email" placeholder="Votre adresse e-mail" required />
         <textarea name="message" rows="5" placeholder="Votre message..." required></textarea>
 
-        <!-- Bouton qui ouvre directement la messagerie -->
-        <a href="mailto:davidsileu6@gmail.com?subject=Contact%20depuis%20le%20portfolio&body=Bonjour%20David,%0A%0AJe%20vous%20contacte%20via%20votre%20portfolio%20pour...%0A%0ACordialement," target="_blank">
-          <button type="button">📧 Envoyer via ma messagerie</button>
-        </a>
+        <a class="contact-btn" href="mailto:davidsileu6@gmail.com?subject=Contact%20depuis%20le%20site&body=Bonjour%20David,%0A%0AJe%20vous%20contacte%20au%20sujet%20de...">📧 Me contacter par e-mail</a>
+        <a class="contact-btn" href="tel:+14384545315">📞 Appeler directement</a>
       </form>
     </section>
   </main>
@@ -259,127 +260,97 @@
     <p>© 2025 — David Sileu</p>
   </footer>
 
-!-- === CHAT ICON === -->
-<img id="chatbot-icon" src="Image/image-david-neutre.png" alt="Assistant Virtuel" onclick="openChat()">
-<div id="chatbot-greeting">Salut 👋</div>
+  <!-- === CHAT ICON === -->
+  <img id="chatbot-icon" src="Image/image-david-neutre.png" alt="Assistant Virtuel" onclick="openChat()">
+  <div id="chatbot-greeting">Besoin d’aide ? 👋</div>
 
-<!-- === CHATBOT === -->
-<div id="chatbot-container">
-  <div id="chatbot-header">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <img id="chatbot-avatar" src="Image/image-david-neutre.png" alt="Assistant Virtuel">
-      <span><strong>Assistant Virtuel - Contact </strong></span>
+  <!-- === CHATBOT === -->
+  <div id="chatbot-container">
+    <div id="chatbot-header">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img id="chatbot-avatar" src="Image/image-david-neutre.png" alt="Assistant Virtuel">
+        <span><strong>Assistant Virtuel — Contact</strong></span>
+      </div>
+      <button id="close-chat" onclick="closeChat()">✖</button>
     </div>
-    <button id="close-chat" onclick="closeChat()">✖</button>
+    <div id="chatbot-body"></div>
   </div>
-  <div id="chatbot-body"></div>
-</div>
 
-<script>
-  const chatbotContainer = document.getElementById("chatbot-container");
-  const chatbotIcon = document.getElementById("chatbot-icon");
-  const chatbotBody = document.getElementById("chatbot-body");
-  const chatbotAvatar = document.getElementById("chatbot-avatar");
+  <script>
+    const chatbotContainer = document.getElementById("chatbot-container");
+    const chatbotIcon = document.getElementById("chatbot-icon");
+    const chatbotBody = document.getElementById("chatbot-body");
+    const chatbotAvatar = document.getElementById("chatbot-avatar");
 
-  function openChat() {
-    chatbotContainer.style.display = "block";
-    chatbotIcon.style.display = "none";
-  }
-
-  function closeChat() {
-    chatbotContainer.style.display = "none";
-    chatbotIcon.style.display = "block";
-  }
-
-  // Fonction pour ajouter un message avec style
-  function addBotMessage(text, mood = "neutre") {
-    const message = document.createElement("div");
-    message.classList.add("bot-message");
-
-    // Changement de l'image selon le mood
-    switch(mood){
-      case "joyeux":
-        chatbotAvatar.src = "assets/image-david-joyeux.png";
-        break;
-      case "vexe":
-        chatbotAvatar.src = "assets/image-david-vexe.png";
-        break;
-      case "serieux":
-        chatbotAvatar.src = "assets/image-david-serieux.png";
-        break;
-      default:
-        chatbotAvatar.src = "assets/image-david-neutre.png";
-    }
-
-    const img = document.createElement("img");
-    img.classList.add("bot-img");
-    img.src = chatbotAvatar.src;
-    img.alt = "bot";
-
-    const p = document.createElement("p");
-    p.textContent = text;
-
-    message.appendChild(img);
-    message.appendChild(p);
-    chatbotBody.appendChild(message);
-    chatbotBody.scrollTop = chatbotBody.scrollHeight;
-  }
-
-  function showOptions(options) {
-    const btnContainer = document.createElement("div");
-    btnContainer.classList.add("options");
-    options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.textContent = opt.text;
-      btn.onclick = () => handleChoice(opt.action);
-      btnContainer.appendChild(btn);
-    });
-    chatbotBody.appendChild(btnContainer);
-    chatbotBody.scrollTop = chatbotBody.scrollHeight;
-  }
-
-  function handleChoice(choice) {
-    if(choice === "qui") {
-      addBotMessage("Je suis David, passionné de tech et IA.", "joyeux");
-      addBotMessage("Je peux t'aider à comprendre comment l'IA peut améliorer ton quotidien.", "serieux");
+    function openChat() {
+      chatbotContainer.style.display = "block";
+      chatbotIcon.style.display = "none";
+      addBotMessage("Salut 👋 Je suis l’assistant virtuel de David ! Tu veux le contacter ?", "joyeux");
       showOptions([
-        { text: "Projets", action: "projets" },
-        { text: "Travail actuel", action: "travail" }
+        { text: "Oui, par téléphone 📞", action: "tel" },
+        { text: "Oui, par e-mail 📧", action: "mail" },
+        { text: "Je veux juste discuter", action: "info" }
       ]);
     }
-    else if(choice === "projets") {
-      addBotMessage("J'ai réalisé des projets technologiques pour des hôpitaux et entreprises.", "serieux");
-      addBotMessage("Je planifie aussi un projet de lunettes connectées 👓.", "joyeux");
-      showOptions([
-        { text: "Contact", action: "contact" },
-        { text: "Études", action: "travail" }
-      ]);
-    }
-    else if(choice === "travail") {
-      addBotMessage("Je travaille sur un assistant virtuel et IA locale pour la productivité.", "serieux");
-      showOptions([
-        { text: "Je veux collaborer", action: "contact" },
-        { text: "Voir projets", action: "projets" }
-      ]);
-    }
-    else if(choice === "contact") {
-      addBotMessage("Tu peux me contacter par email ou téléphone, je serai ravi d’échanger !", "joyeux");
-      addBotMessage("Même si tu es en Afrique, je peux t'aider efficacement 😉", "joyeux");
-      showOptions([
-        { text: "Réserver un appel", action: "reserver" },
-        { text: "Encore une question", action: "qui" }
-      ]);
-    }
-    else if(choice === "reserver") {
-      addBotMessage("Super ! Clique ici pour réserver 👉 <a href='https://calendly.com/' target='_blank'>Réserver un appel</a>", "joyeux");
-    }
-    else if(choice === "end") {
-      addBotMessage("À bientôt 👋 et n’oublie pas : l’action concrétise les rêves !", "joyeux");
-    }
-  }
-</script>
 
+    function closeChat() {
+      chatbotContainer.style.display = "none";
+      chatbotIcon.style.display = "block";
+    }
+
+    function addBotMessage(text, mood = "neutre") {
+      const message = document.createElement("div");
+      message.classList.add("bot-message");
+
+      switch(mood){
+        case "joyeux": chatbotAvatar.src = "Image/image-david-joyeux.png"; break;
+        case "vexe": chatbotAvatar.src = "Image/image-david-vexe.png"; break;
+        case "serieux": chatbotAvatar.src = "Image/image-david-serieux.png"; break;
+        default: chatbotAvatar.src = "Image/image-david-neutre.png";
+      }
+
+      const img = document.createElement("img");
+      img.classList.add("bot-img");
+      img.src = chatbotAvatar.src;
+
+      const p = document.createElement("p");
+      p.innerHTML = text;
+
+      message.appendChild(img);
+      message.appendChild(p);
+      chatbotBody.appendChild(message);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    function showOptions(options) {
+      const btnContainer = document.createElement("div");
+      btnContainer.classList.add("options");
+      options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt.text;
+        btn.onclick = () => handleChoice(opt.action);
+        btnContainer.appendChild(btn);
+      });
+      chatbotBody.appendChild(btnContainer);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    function handleChoice(choice) {
+      if (choice === "tel") {
+        addBotMessage("📞 Parfait ! Tu peux appeler directement David au <a href='tel:+14384545315'>+1 438 454 5315</a>. Il répond rapidement aux appels pro.", "joyeux");
+        addBotMessage("N’hésite pas à mentionner que tu viens du site, il saura exactement comment t’aider.", "serieux");
+      } else if (choice === "mail") {
+        addBotMessage("📧 Voici son adresse : <a href='mailto:davidsileu6@gmail.com'>davidsileu6@gmail.com</a>", "joyeux");
+        addBotMessage("Écris-lui un message clair, et il te répondra dans les 24h !", "serieux");
+      } else if (choice === "info") {
+        addBotMessage("David adore échanger sur l’IA, la cybersécurité et les innovations tech africaines 🌍.", "joyeux");
+        addBotMessage("Mais si tu veux une réponse rapide, le mieux reste un appel ou un mail professionnel.", "serieux");
+        showOptions([
+          { text: "Je l’appelle", action: "tel" },
+          { text: "Je lui écris", action: "mail" }
+        ]);
+      }
+    }
+  </script>
 </body>
 </html>
-
-
