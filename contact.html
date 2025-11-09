@@ -265,7 +265,7 @@
   <div id="chatbot-greeting">Besoin d’aide ? 👋</div>
 
   <!-- === CHATBOT === -->
-  <div id="chatbot-container">
+  <div id="chatbot-container" style="display:none;">
     <div id="chatbot-header">
       <div style="display:flex;align-items:center;gap:10px;">
         <img id="chatbot-avatar" src="Image/image-david-neutre.png" alt="Assistant Virtuel">
@@ -282,9 +282,27 @@
     const chatbotBody = document.getElementById("chatbot-body");
     const chatbotAvatar = document.getElementById("chatbot-avatar");
 
+    const IMAGES = {
+      neutre: "Image/image-david-neutre.png",
+      joyeux: "Image/image-david-presentation.png",
+      vexe: "Image/image-david-presentation-embarasser.png",
+      serieux: "Image/image-david-serieux.png",
+      fallback: "Image/image-david-neutre.png"
+    };
+
+    function safeImage(path) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.src = path;
+        img.onload = () => resolve(path);
+        img.onerror = () => resolve(IMAGES.fallback);
+      });
+    }
+
     function openChat() {
       chatbotContainer.style.display = "block";
       chatbotIcon.style.display = "none";
+      chatbotBody.innerHTML = "";
       addBotMessage("Salut 👋 Je suis l’assistant virtuel de David ! Tu veux le contacter ?", "joyeux");
       showOptions([
         { text: "Oui, par téléphone 📞", action: "tel" },
@@ -298,20 +316,16 @@
       chatbotIcon.style.display = "block";
     }
 
-    function addBotMessage(text, mood = "neutre") {
+    async function addBotMessage(text, mood = "neutre") {
       const message = document.createElement("div");
       message.classList.add("bot-message");
 
-      switch(mood){
-        case "joyeux": chatbotAvatar.src = "Image/image-david-joyeux.png"; break;
-        case "vexe": chatbotAvatar.src = "Image/image-david-vexe.png"; break;
-        case "serieux": chatbotAvatar.src = "Image/image-david-serieux.png"; break;
-        default: chatbotAvatar.src = "Image/image-david-neutre.png";
-      }
+      const imgSrc = await safeImage(IMAGES[mood] || IMAGES.neutre);
+      chatbotAvatar.src = imgSrc;
 
       const img = document.createElement("img");
       img.classList.add("bot-img");
-      img.src = chatbotAvatar.src;
+      img.src = imgSrc;
 
       const p = document.createElement("p");
       p.innerHTML = text;
@@ -336,15 +350,17 @@
     }
 
     function handleChoice(choice) {
+      document.querySelectorAll(".options").forEach(e => e.remove());
+
       if (choice === "tel") {
-        addBotMessage("📞 Parfait ! Tu peux appeler directement David au <a href='tel:+14384545315'>+1 438 454 5315</a>. Il répond rapidement aux appels pro.", "joyeux");
-        addBotMessage("N’hésite pas à mentionner que tu viens du site, il saura exactement comment t’aider.", "serieux");
+        addBotMessage("📞 Tu peux appeler David au <a href='tel:+14384545315'>+1 438 454 5315</a>.", "joyeux");
+        addBotMessage("Mentionne que tu viens du site, il saura t’aider !", "serieux");
       } else if (choice === "mail") {
         addBotMessage("📧 Voici son adresse : <a href='mailto:davidsileu6@gmail.com'>davidsileu6@gmail.com</a>", "joyeux");
-        addBotMessage("Écris-lui un message clair, et il te répondra dans les 24h !", "serieux");
+        addBotMessage("Il répond généralement sous 24 h !", "serieux");
       } else if (choice === "info") {
-        addBotMessage("David adore échanger sur l’IA, la cybersécurité et les innovations tech africaines 🌍.", "joyeux");
-        addBotMessage("Mais si tu veux une réponse rapide, le mieux reste un appel ou un mail professionnel.", "serieux");
+        addBotMessage("David adore parler d’IA, de cybersécurité et de tech africaine 🌍.", "joyeux");
+        addBotMessage("Mais pour une réponse rapide, préfère un appel ou un mail pro.", "serieux");
         showOptions([
           { text: "Je l’appelle", action: "tel" },
           { text: "Je lui écris", action: "mail" }
