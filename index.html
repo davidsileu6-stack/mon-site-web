@@ -372,11 +372,12 @@
       }
     }
   </script>
-  <script>
+<script>
 const canvas = document.getElementById("bg-animation");
 const ctx = canvas.getContext("2d");
 
 let particles = [];
+let waves = [];
 let mouse = { x: null, y: null };
 let colors = ["#3b82f6", "#60a5fa", "#2563eb", "#38bdf8"];
 
@@ -387,71 +388,128 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
+// === PARTICULES DE BASE (ne disparaissent jamais entièrement) ===
+function initParticles() {
+  for (let i = 0; i < 150; i++) {
+    particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height));
+  }
+}
+initParticles();
+
 document.addEventListener("mousemove", (e) => {
   mouse.x = e.x;
   mouse.y = e.y;
-  for (let i = 0; i < 3; i++) {
-    particles.push(new Particle(mouse.x, mouse.y));
-  }
-});
 
-document.addEventListener("click", (e) => {
-  // Mini explosion de particules
-  for (let i = 0; i < 20; i++) {
+  // Effet "trainée" améliorée
+  for (let i = 0; i < 2; i++) {
     particles.push(new Particle(mouse.x, mouse.y, true));
   }
 });
 
+document.addEventListener("click", (e) => {
+  // Ajoute une onde
+  waves.push(new Wave(e.x, e.y));
+
+  // Repousse les particules proches
+  particles.forEach((p) => {
+    let dx = p.x - e.x;
+    let dy = p.y - e.y;
+    let dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist < 180) {
+      p.speedX += dx / 20;
+      p.speedY += dy / 20;
+    }
+  });
+});
+
+// === CLASSE PARTICULE ===
 class Particle {
-  constructor(x, y, explosion = false) {
+  constructor(x, y, trail = false) {
     this.x = x;
     this.y = y;
-    this.size = explosion ? 5 + Math.random() * 5 : 2 + Math.random() * 2;
+    this.size = trail ? 3 + Math.random() * 3 : 2 + Math.random() * 1.5;
     this.color = colors[Math.floor(Math.random() * colors.length)];
-
-    const speed = explosion ? 5 : 2;
-    this.speedX = (Math.random() - 0.5) * speed;
-    this.speedY = (Math.random() - 0.5) * speed;
-    this.life = 100;
+    this.speedX = (Math.random() - 0.5) * 1.2;
+    this.speedY = (Math.random() - 0.5) * 1.2;
+    this.opacity = 1;
+    this.trail = trail;
   }
 
   update() {
     this.x += this.speedX;
     this.y += this.speedY;
-    this.life--;
 
-    // Effet : les particules "fuient" la souris
-    if (mouse.x && mouse.y) {
+    // Les particules reviennent dans l'écran
+    if (this.x < 0) this.x = canvas.width;
+    if (this.x > canvas.width) this.x = 0;
+    if (this.y < 0) this.y = canvas.height;
+    if (this.y > canvas.height) this.y = 0;
+
+    // Effet fuite de la souris
+    if (mouse.x) {
       let dx = this.x - mouse.x;
       let dy = this.y - mouse.y;
       let dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 80) {
-        this.x += dx / 10;
-        this.y += dy / 10;
+      if (dist < 90) {
+        this.x += dx / 12;
+        this.y += dy / 12;
       }
     }
 
-    if (this.life <= 0) {
-      this.size -= 0.1;
+    // Évaporation très lente du trail
+    if (this.trail) {
+      this.opacity -= 0.004;
+      if (this.opacity <= 0.1) {
+        this.opacity = 1;
+        this.trail = false;
+      }
     }
   }
 
   draw() {
-    ctx.fillStyle = this.color + "AA"; // un peu transparent
+    ctx.fillStyle = this.color + Math.floor(this.opacity * 255).toString(16);
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
   }
 }
 
+// === CLASSE ONDE (shockwave) ===
+class Wave {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.radius = 0;
+    this.opacity = 0.6;
+  }
+
+  update() {
+    this.radius += 5;
+    this.opacity -= 0.01;
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(96, 165, 250, ${this.opacity})`;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  }
+}
+
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  particles = particles.filter(p => p.size > 0);
 
   particles.forEach((p) => {
     p.update();
     p.draw();
+  });
+
+  waves = waves.filter(w => w.opacity > 0);
+  waves.forEach((w) => {
+    w.update();
+    w.draw();
   });
 
   requestAnimationFrame(animate);
@@ -459,6 +517,8 @@ function animate() {
 animate();
 </script>
 
+
 </body>
 </html>
+
 
