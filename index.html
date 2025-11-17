@@ -185,7 +185,7 @@
       animation: float 3s ease-in-out infinite;
       border-radius: 50%;
     }
-
+    
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-8px); }
@@ -224,10 +224,6 @@
     }
   </style>
 </head>
-
-<body>
-  <canvas id="bg-animation"></canvas>
-
   <header>
     <h1>Tchouaga Sileu David Emmanuel</h1>
     <nav>
@@ -289,7 +285,20 @@
       </div>
     </div>
   </div>
-
+    <canvas id="bg-animation"></canvas>
+    <div id="game-window" style="
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 700px;
+    transform: translate(-50%, -50%);
+    background: black;
+    border: 3px solid white;
+    display: none;
+    z-index: 999999;">
+    <canvas id="shootCanvas" width="500" height="700"></canvas>
+  </div>
   <script>
     const chatbotContainer = document.getElementById("chatbot-container");
     const chatbotIcon = document.getElementById("chatbot-icon");
@@ -475,6 +484,135 @@
     }
   
     animate();
+  </script>
+<script>
+  // Konami Code (unique)
+  const konamiCode = ["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","b","a"];
+  let konamiIndex = 0;
+  
+  window.addEventListener("keydown", (e) => {
+      if (e.key === konamiCode[konamiIndex]) {
+          konamiIndex++;
+          if (konamiIndex === konamiCode.length) {
+              startShootEmUp();
+              konamiIndex = 0;
+          }
+      } else {
+          konamiIndex = 0;
+      }
+  });
+  
+  // -------------------------
+  // SHOOT 'EM UP
+  // -------------------------
+  function startShootEmUp() {
+      document.getElementById("game-window").style.display = "block";
+  
+      const canvas = document.getElementById("shootCanvas");
+      const ctx = canvas.getContext("2d");
+  
+      const player = {
+          x: canvas.width / 2 - 20,
+          y: canvas.height - 80,
+          width: 40,
+          height: 40,
+          speed: 5,
+      };
+  
+      const bullets = [];
+      const enemies = [];
+      let difficulty = 1;
+  
+      let keys = {};
+  
+      window.addEventListener("keydown", (e) => keys[e.key] = true);
+      window.addEventListener("keyup", (e) => keys[e.key] = false);
+  
+      // Tire en appuyant sur ESPACE
+      window.addEventListener("keydown", (e) => {
+          if (e.key === " ") {
+              bullets.push({
+                  x: player.x + player.width/2 - 4,
+                  y: player.y,
+                  width: 8,
+                  height: 15,
+                  speed: 7
+              });
+          }
+      });
+  
+      function spawnEnemy() {
+          enemies.push({
+              x: Math.random() * (canvas.width - 40),
+              y: -50,
+              width: 40,
+              height: 40,
+              speed: 1 + difficulty * 0.4
+          });
+      }
+  
+      setInterval(spawnEnemy, 1000);
+  
+      function update() {
+          // Mouvements joueur
+          if (keys["ArrowLeft"] && player.x > 0) player.x -= player.speed;
+          if (keys["ArrowRight"] && player.x < canvas.width - player.width) player.x += player.speed;
+          if (keys["ArrowUp"] && player.y > 0) player.y -= player.speed;
+          if (keys["ArrowDown"] && player.y < canvas.height - player.height) player.y += player.speed;
+  
+          // Mouvements balles
+          bullets.forEach((b, index) => {
+              b.y -= b.speed;
+              if (b.y < -20) bullets.splice(index, 1);
+          });
+  
+          // Mouvements ennemis
+          enemies.forEach((enemy, index) => {
+              enemy.y += enemy.speed;
+              if (enemy.y > canvas.height + 50) enemies.splice(index, 1);
+          });
+  
+          // Collisions
+          bullets.forEach((b, bIndex) => {
+              enemies.forEach((e, eIndex) => {
+                  if (
+                      b.x < e.x + e.width &&
+                      b.x + b.width > e.x &&
+                      b.y < e.y + e.height &&
+                      b.y + b.height > e.y
+                  ) {
+                      enemies.splice(eIndex, 1);
+                      bullets.splice(bIndex, 1);
+                      difficulty += 0.1;
+                  }
+              });
+          });
+      }
+  
+      function draw() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+          // Joueur
+          ctx.fillStyle = "cyan";
+          ctx.fillRect(player.x, player.y, player.width, player.height);
+  
+          // Balle
+          ctx.fillStyle = "yellow";
+          bullets.forEach(b => ctx.fillRect(b.x, b.y, b.width, b.height));
+  
+          // Ennemis
+          ctx.fillStyle = "red";
+          enemies.forEach(e => ctx.fillRect(e.x, e.y, e.width, e.height));
+      }
+  
+      function loop() {
+          update();
+          draw();
+          requestAnimationFrame(loop);
+      }
+  
+      loop();
+  }
   </script>
   
 
