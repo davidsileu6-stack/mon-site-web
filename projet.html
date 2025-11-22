@@ -7,16 +7,16 @@
 <meta name="description" content="Découvrez les projets techniques de David Sileu : IA locale, réseau hospitalier, lunettes connectées, et capteurs Arduino.">
 <link rel="stylesheet" href="style.css">
 <style>
- #bg-animation {
-  position: fixed;
+#bg-animation {
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: -1;
-  pointer-events: none; /* L'utilisateur ne peut pas cliquer dessus */
+  pointer-events: none;
 }
-/* ==== Styles similaires à ton code original ==== */
+
 body { font-family:"Segoe UI",Roboto,sans-serif; background:linear-gradient(160deg,#0f172a,#1e293b); color:#f8fafc; margin:0;padding:0; }
 header { background:rgba(30,41,59,0.95); text-align:center; padding:1.5rem; border-bottom:3px solid #2563eb; }
 header h1 { font-size:1.8rem; margin:0.3rem 0; }
@@ -105,6 +105,20 @@ footer { background: rgba(15,23,42,0.9); color:#94a3b8; text-align:center; paddi
 <footer>
 <p>© 2025 — David Sileu | Réseaux • Cybersécurité • Intelligence Artificielle</p>
 </footer>
+<div id="scoreBoard" style="
+    display:none;
+    position:absolute;
+    top:20px; left:20px;
+    background:#0008;
+    color:white;
+    padding:10px 20px;
+    border-radius:8px;
+    font-size:18px;
+    z-index:999;
+">
+    Score : <span id="scoreValue">0</span><br>
+    Best : <span id="bestValue">0</span>
+</div>
 
 <!-- === CHAT ICON === -->
 <img id="chatbot-icon" src="Image/image-david-neutre.png" alt="Assistant Virtuel" onclick="openChat()">
@@ -276,6 +290,7 @@ function runScenario(step){
 function initChat(){ runScenario("start"); }
 function handleChoice(choice){ runScenario(choice); }
 </script>
+<canvas id="gameCanvas" width="400" height="600"></canvas>
 <script>
   const bgCanvas = document.getElementById("bg-animation");
   const bgCtx = bgCanvas.getContext("2d");
@@ -368,6 +383,204 @@ function handleChoice(choice){ runScenario(choice); }
 
   animate();
 </script>
+<!-- ⬇⬇ debut jeux ⬇⬇ -->
+<div id="platformer-scoreboard" style="display:none;position:fixed;top:18px;left:18px;background:#0008;color:#fff;padding:10px 14px;border-radius:8px;z-index:999998">
+  Score : <span id="pf-score">0</span> — Best : <span id="pf-best">0</span>
+</div>
 
+<div id="platformer-window" role="dialog" aria-hidden="true">
+  <div class="pf-header">
+    <div class="pf-title">Platformer — Konami activé</div>
+    <button id="pf-quit">Quitter</button>
+  </div>
+
+  <canvas id="pf-canvas" width="400" height="560"></canvas>
+</div>
+<!-- fin de la fenetre du jeux -->
+<script>
+/* ===========================================================
+   KONAMI CODE → déclenche le jeu (↑↑↓↓←→←→ b a)
+   =========================================================== */
+(function(){
+  const code = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+  let index = 0;
+  window.addEventListener("keydown", e=>{
+    const key = (e.key.length===1?e.key.toLowerCase():e.key);
+    const expected = (code[index].length===1?code[index].toLowerCase():code[index]);
+    if(key===expected){
+      index++;
+      if(index===code.length){
+        document.getElementById("platformer-window").style.display="block";
+        document.getElementById("platformer-scoreboard").style.display="block";
+        document.getElementById("platformer-window").setAttribute("aria-hidden","false");
+        startPlatformer(); // Lancement du jeu
+        index=0;
+      }
+    } else index=0;
+  });
+})();
+
+/* ===========================================================
+   GAME ENGINE (START + SUPER SAUT)
+   =========================================================== */
+function startPlatformer(){
+  if(startPlatformer._on) return;
+  startPlatformer._on = true;
+
+  const win  = document.getElementById("platformer-window");
+  const quit = document.getElementById("pf-quit");
+  const cvs  = document.getElementById("pf-canvas");
+  const ctx  = cvs.getContext("2d");
+  const scoreEl = document.getElementById("pf-score");
+  const bestEl  = document.getElementById("pf-best");
+
+  const W = cvs.width, H = cvs.height;
+  let running = true, raf;
+  let score = 0;
+  let best = parseInt(localStorage.getItem("platformer_best")||"0",10);
+  bestEl.textContent = best;
+
+  const player = { x:W/2-15, y:H-80, w:30, h:30, vx:0, vy:0, speed:4, jump:-12, superJump:false };
+
+  const TYPES = {N:"normal", M:"moving", S:"spike", B:"break", R:"bounce"};
+  let plats = [];
+  let particles = [];
+
+  function makePlat(y){
+    const r=Math.random();
+    let t=TYPES.N;
+    if(r<0.18)t=TYPES.M;
+    else if(r<0.30)t=TYPES.S;
+    else if(r<0.38)t=TYPES.B;
+    else if(r<0.46)t=TYPES.R;
+    return { x:Math.random()*(W-100), y:y, w:100, h:16, type:t, dx:(t===TYPES.M?(Math.random()<0.5?1:-1)*(1+Math.random()):0), broken:false };
+  }
+
+  for(let i=0;i<8;i++) plats.push(makePlat(H-i*70));
+
+  const keys={};
+  window.addEventListener("keydown", e=>keys[e.key]=true);
+  window.addEventListener("keyup", e=>keys[e.key]=false);
+
+  quit.onclick = function(){
+    running=false;
+    cancelAnimationFrame(raf);
+    win.style.display="none";
+    document.getElementById("platformer-scoreboard").style.display="none";
+    win.setAttribute("aria-hidden","true");
+    startPlatformer._on=false;
+  };
+
+  // === PARTICLES POUR SUPER SAUT / EXPLOSION ===
+  class Particle{
+    constructor(x,y,dx,dy,color,size){ this.x=x; this.y=y; this.dx=dx; this.dy=dy; this.color=color; this.size=size; }
+    update(){ this.x+=this.dx; this.y+=this.dy; this.size*=0.95; this.dy+=0.2; }
+    draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fillStyle=this.color; ctx.fill(); }
+  }
+  function explode(x,y,color){ for(let i=0;i<25;i++){ const angle=Math.random()*Math.PI*2,speed=Math.random()*3+1; particles.push(new Particle(x,y,Math.cos(angle)*speed,Math.sin(angle)*speed,color,Math.random()*5+3)); } }
+
+  // ==================== GAME LOOP ====================
+  function update(){
+    if(!running) return;
+
+    player.vx=0;
+    if(keys["ArrowLeft"]||keys["a"]) player.vx=-player.speed;
+    if(keys["ArrowRight"]||keys["d"]) player.vx=player.speed;
+    player.x += player.vx;
+    if(player.x<0) player.x=0;
+    if(player.x+player.w>W) player.x=W-player.w;
+
+    player.vy +=0.6;
+    player.y += player.vy;
+
+    if(player.y < H*0.35){
+      const dy = Math.min(H*0.35 - player.y,6);
+      player.y += dy;
+      plats.forEach(p=>p.y+=dy);
+      score += Math.round(dy);
+    }
+
+    for(let i=plats.length-1;i>=0;i--){
+      const p=plats[i];
+      if(p.dx){ p.x+=p.dx; if(p.x<=0||p.x+p.w>=W) p.dx*=-1; }
+      if(p.y>H+40){ plats.splice(i,1); plats.push(makePlat(-40-Math.random()*40)); }
+    }
+
+    // Collision avec plateformes + super saut
+    if(player.vy>0){
+      for(const p of plats){
+        if(player.x+player.w>p.x && player.x<p.x+p.w){
+          if(player.y+player.h<=p.y+8 && player.y+player.h+player.vy>=p.y){
+            // Super saut
+            if(keys[" "] && !player.superJump){
+              player.vy = player.jump * (Math.random()<0.5 ? 2 : 3); // double/triple saut
+              player.superJump = true;
+              p.broken = true;
+              explode(player.x+player.w/2, player.y+player.h/2, "#00ffff");
+              break;
+            }
+            player.superJump = false;
+
+            if(p.type===TYPES.S){ explode(player.x+player.w/2,player.y+player.h/2,"#ff0000"); gameOver(); return; }
+            if(p.type===TYPES.B){ explode(p.x+p.w/2,p.y+8,"#ffa500"); p.broken=true; player.vy=player.jump; break; }
+            if(p.type===TYPES.R){ player.vy=-18; break; }
+
+            player.vy=player.jump;
+            break;
+          }
+        }
+      }
+    }
+
+    plats = plats.filter(p=>!p.broken);
+
+    if(player.y>H+60){ explode(player.x+player.w/2,player.y+player.h/2,"#ff0000"); gameOver(); return; }
+
+    scoreEl.textContent=score;
+    if(score>best){ best=score; bestEl.textContent=best; localStorage.setItem("platformer_best",best); }
+
+    particles.forEach(p=>p.update());
+    particles = particles.filter(p=>p.size>0.5);
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle="#111"; ctx.fillRect(0,0,W,H);
+
+    plats.forEach(p=>{
+      switch(p.type){
+        case TYPES.S: ctx.fillStyle="#8b0000"; break;
+        case TYPES.M: ctx.fillStyle="#ffd24d"; break;
+        case TYPES.B: ctx.fillStyle="#ffa07a"; break;
+        case TYPES.R: ctx.fillStyle="#4dd0ff"; break;
+        default: ctx.fillStyle="#2ecc71";
+      }
+      ctx.fillRect(p.x,p.y,p.w,p.h);
+    });
+
+    ctx.fillStyle="#2ee6ff";
+    ctx.fillRect(player.x,player.y,player.w,player.h);
+    ctx.fillStyle="#000";
+    ctx.fillRect(player.x+6,player.y+8,4,4);
+    ctx.fillRect(player.x+player.w-11,player.y+8,4,4);
+
+    particles.forEach(p=>p.draw());
+  }
+
+  function loop(){
+    if(!running) return;
+    update();
+    draw();
+    raf=requestAnimationFrame(loop);
+  }
+  loop();
+
+  function gameOver(){
+    running=false;
+    cancelAnimationFrame(raf);
+    setTimeout(()=>alert(`GAME OVER !\nScore : ${score}\nBest : ${best}`),50);
+  }
+}
+</script>
 </body>
 </html>
